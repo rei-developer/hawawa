@@ -1,0 +1,16 @@
+const pool = require('..')
+
+module.exports.updateTopicByIsBest = async (topicId, isBest = 0) =>
+  await pool.query('UPDATE Topics SET isBest = ? WHERE id = ?', [isBest, topicId])
+
+module.exports.updateTopicByIsNotice = async (topicId, isNotice = 0) =>
+  await pool.query('UPDATE Topics SET isNotice = ? WHERE id = ?', [isNotice, topicId])
+
+module.exports.updateTopicByIsAllowed = async (topicId, isAllowed = 0) =>
+  await pool.query('UPDATE Topics SET isAllowed = ? WHERE id = ?', [isAllowed, topicId])
+
+module.exports.updateTopicCountsByLikes = async (topicId, likes = 1) =>
+  await pool.query('UPDATE TopicCounts SET likes = likes + ? WHERE topicId = ?', [likes, topicId])
+
+module.exports.updateTopicCountsByHates = async (topicId, hates = 1) =>
+  await pool.query('UPDATE TopicCounts SET hates = hates + ? WHERE topicId = ?', [hates, topicId])

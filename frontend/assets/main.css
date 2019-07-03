@@ -1,0 +1,161 @@
+hr {
+  height: 1px !important;
+  margin: .5rem 0 !important;
+  border-color: #CCC !important;
+}
+
+/* Width */
+.widthAll { width: 100% }
+
+/* Margin */
+.marginTop { margin-top: 1rem }
+.marginBottom { margin-bottom: 1rem }
+.marginVertical { margin: 1rem 0 }
+.marginHorizon { margin: 0 1rem }
+
+/* Float */
+.floatRight { float: right }
+
+/* Blank */
+.blank { min-height: 0.02px }
+
+/* Container */
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+.Container > .item {
+  display: flex;
+}
+.Container > .item > .content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.Container > .item > .sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-left: 1rem;
+}
+
+.containerSubject {
+  margin-bottom: 1rem;
+  color: #202020;
+  font-size: 1.2rem;
+}
+
+/* Element UI Customize */
+.el-header,
+.el-main,
+.el-footer {
+  padding: 0 !important;
+}
+.el-header {
+  margin-bottom: 1rem !important;
+}
+.el-menu {
+  border: 0 !important;
+}
+.el-menu-item,
+.el-submenu__title {
+  border-bottom: 0 !important;
+}
+.el-menu-item svg {
+  margin-bottom: 5px !important;
+}
+.el-aside {
+  position: fixed;
+  height: 100%;
+  background: #FFF;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+  z-index: 10000;
+}
+.el-button--primary {
+  border-color: #29313D !important;
+  background-color: #29313D !important;
+}
+.el-button--warning {
+  border-color: #FFC90E !important;
+  background-color: #FFC90E !important;
+}
+.el-button--danger {
+  border-color: #ED1C24 !important;
+  background-color: #ED1C24 !important;
+}
+.el-button--primary:hover,
+.el-button--warning:hover,
+.el-button--danger:hover {
+  opacity: .8;
+}
+.el-radio-button span:hover {
+  color: #409EFF !important;
+}
+.el-radio-button.is-active span {
+  background-color: #29313D !important;
+  border-color: #29313D !important;
+  box-shadow: -1px 0 0 0 #29313D !important;
+}
+.el-radio-button.is-active span:hover {
+  color: #FFF !important;
+}
+.el-select {
+  min-width: 6rem !important;
+}
+.el-badge__content {
+  background-color: #ED1C24 !important;
+}
+.el-pagination button,
+.el-pagination ul,
+.el-pagination li { background: transparent !important }
+.el-pagination li { margin-top: 0 !important }
+
+/* Router Progress */
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+}
+
+/* Anime Background */
+.animeBackground {
+  position: fixed;
+  background-image: url('/anime.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .hidden-desktop { display: none }
+  .AD {
+    width: 728px;
+    height: 90px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 1023px) {
+  .hidden-mobile,
+  .Container > .item > .sidebar { display: none }
+  .AD {
+    width: 320px;
+    height: 50px;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+}
+
+.AD iframe,
+.ADSidebar iframe { width: 100% }
+.ADSidebar {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+}

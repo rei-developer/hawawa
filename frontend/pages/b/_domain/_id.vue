@@ -215,7 +215,7 @@
         `/api/topic/read/${id}`,
         { headers: { 'x-access-token': token } }
       )
-      if (data.status === 'fail') return alert(data.message)
+      if (data.status === 'fail') return console.log(data.message)
       if (store.state.user.isLogged) store.commit('user/setNoticeCount', data.count)
       const charts = data.charts ? data.charts.map(item => item.text) : []
       const chartVotes = []

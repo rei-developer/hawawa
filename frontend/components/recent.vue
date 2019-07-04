@@ -26,9 +26,9 @@
         </div>
       </div>
     </div>
-    <!-- <div class='ADSidebar'>
+    <div class='ADSidebar'>
       <iframe src='/ad-sidebar.html' />
-    </div> -->
+    </div>
   </div>
 </template>
 

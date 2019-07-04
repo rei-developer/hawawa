@@ -36,7 +36,7 @@ module.exports = {
         })
       }
     },
-    vendor: ['vuex', 'socket.io-client', 'element-ui'],
+    vendor: ['axios', 'vuex', 'socket.io-client', 'element-ui'],
   },
   plugins: [
     '~/plugins/socket.io.js',

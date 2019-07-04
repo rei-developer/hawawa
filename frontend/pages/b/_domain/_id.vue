@@ -95,10 +95,10 @@
                     <el-button-group>
                       <el-button type='primary' size='small' round @click='votes(true)'>
                         <img src='/up.png'>
-                        데뷔 {{ topic.likes }}
+                        하와와 {{ topic.likes }}
                       </el-button>
                       <el-button type='info' size='small' round @click='votes(false)'>
-                        탈락 {{ topic.hates }}
+                        문재앙 {{ topic.hates }}
                         <img src='/down.png'>
                       </el-button>
                     </el-button-group>

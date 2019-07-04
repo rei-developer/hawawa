@@ -1,13 +1,13 @@
 {
   "name": "hawawa",
   "version": "3.0.0",
-  "description": "Nuxt.js project",
+  "description": "hawawa project",
   "author": "",
   "private": false,
   "config": {
     "nuxt": {
       "host": "127.0.0.1",
-      "port": "8001"
+      "port": "3001"
     }
   },
   "scripts": {

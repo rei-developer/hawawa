@@ -212,7 +212,7 @@
       const id = params.id
       const token = store.state.user.isLogged ? store.state.user.token : ''
       const { data } = await axios.get(
-        `http://150.95.214.125:3000/api/topic/read/${id}`,
+        `/api/topic/read/${id}`,
         { headers: { 'x-access-token': token } }
       )
       if (data.status === 'fail') return console.log(data.message)

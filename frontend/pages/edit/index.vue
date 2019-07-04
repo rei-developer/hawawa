@@ -77,8 +77,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  
   export default {
     data() {
       return {
@@ -123,7 +121,7 @@
         if (file.size > LIMITS) return this.$message.error('이미지 업로드 실패... (10MB 이하만 업로드 가능)')
         this.loading = true
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/cloud/profile',
           formData,
           { headers: { 'content-type': 'multipart/form-data' } }
@@ -136,7 +134,7 @@
         this.editByProfileImage(token, data.filename)
       },
       editByProfileImage: async function(token, url) {
-        const { data } = await axios.patch(
+        const data = await this.$axios.$patch(
           '/api/auth/edit/profile',
           { url },
           { headers: { 'x-access-token': token } }
@@ -151,7 +149,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.patch(
+        const data = await this.$axios.$patch(
           '/api/auth/edit',
           { nickname: this.nickname },
           { headers: { 'x-access-token': token } }

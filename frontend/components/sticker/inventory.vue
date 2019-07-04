@@ -23,8 +23,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  
   export default {
     data() {
       return {
@@ -39,7 +37,7 @@
       getData: async function() {
         if (!this.$store.state.user.isLogged) return
         const token = this.$store.state.user.token
-        const { data } = await axios.get(
+        const data = await this.$axios.$get(
           `/api/sticker/list`,
           { headers: { 'x-access-token': token } }
         )

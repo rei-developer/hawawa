@@ -97,7 +97,6 @@
 <script>
   import Library from '~/assets/lib.js'
   import Loading from '~/components/loading.vue'
-  import axios from 'axios'
   
   export default {
     components: { Loading },
@@ -124,7 +123,7 @@
     },
     async asyncData ({ params }) {
       const domain = params.domain
-      const { data } = await axios.get(`/api/topic/categories/${domain}`)
+      const data = await this.$axios.$get(`/api/topic/categories/${domain}`)
       return { domain, categories: data }
     },
     methods: {
@@ -138,7 +137,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.loading = true
-        const { data } = await axios.post('/api/topic/write', {
+        const data = await this.$axios.$post('/api/topic/write', {
           domain: this.domain,
           isNotice: this.form.isNotice,
           category: this.form.category === '(없음)' ? '' : this.form.category,
@@ -170,7 +169,7 @@
         if (!/(.gif|.png|.jpg|.jpeg|.webp)/i.test(files[index].name)) this.$message.error(`${index + 1}번째 이미지 업로드 실패... (gif, png, jpg, jpeg, webp만 가능)`)
         else if (files[index].size > LIMITS) this.$message.error(`${index + 1}번째 이미지 업로드 실패... (10MB 이하만 업로드 가능)`)
         else {
-          const { data } = await axios.post(
+          const data = await this.$axios.$post(
             '/api/cloud/topic',
             formData,
             { headers: { 'content-type': 'multipart/form-data' } }

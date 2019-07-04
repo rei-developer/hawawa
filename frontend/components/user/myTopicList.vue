@@ -62,7 +62,6 @@
 
 <script>
   import Library from '~/assets/lib.js'
-  import axios from 'axios'
   
   export default {
     props: ['id', 'page'],
@@ -83,7 +82,7 @@
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
         if (forceUpdate) this.page = 1
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/topic/list',
           { page: this.page - 1, userId: this.$store.state.user.id }
         )

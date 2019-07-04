@@ -36,7 +36,7 @@ module.exports = {
         })
       }
     },
-    vendor: ['axios', 'vuex', 'socket.io-client', 'element-ui'],
+    vendor: ['vuex', 'socket.io-client', 'element-ui'],
   },
   plugins: [
     '~/plugins/socket.io.js',
@@ -50,8 +50,9 @@ module.exports = {
     'element-ui/lib/theme-chalk/display.css'
   ],
   modules: [
-    '@nuxtjs/bulma',
     '@nuxtjs/proxy',
+    '@nuxtjs/axios',
+    '@nuxtjs/bulma',
     ['@nuxtjs/moment', ['ko']],
     'nuxt-fontawesome',
     'nuxt-clipboard2'
@@ -63,6 +64,9 @@ module.exports = {
         icons: ['fas']
       }
     ]
+  },
+  axios: {
+    proxy: true
   },
   proxy: {
     '/api': 'http://127.0.0.1:3000'

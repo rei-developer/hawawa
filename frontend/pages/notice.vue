@@ -77,7 +77,6 @@
 
 <script>
   import Recent from '~/components/recent.vue'
-  import axios from 'axios'
   
   export default {
     components: { Recent },
@@ -113,7 +112,7 @@
           this.notices = []
           this.page = 0
         }
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/notice/list',
           { page: this.page++ },
           { headers: { 'x-access-token': token } }
@@ -130,7 +129,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.put(
+        const data = await this.$axios.$put(
           `/api/notice/readed/${item.id}/${item.confirm > 0 ? 0 : 1}`,
           { success: true },
           { headers: { 'x-access-token': token } }
@@ -148,7 +147,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.put(
+        const data = await this.$axios.$put(
           '/api/notice/readed',
           { success: true },
           { headers: { 'x-access-token': token } }
@@ -165,7 +164,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.delete(
+        const data = await this.$axios.$delete(
           `/api/notice/clear/${item.id}`,
           { headers: { 'x-access-token': token } }
         )
@@ -179,7 +178,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.delete(
+        const data = await this.$axios.$delete(
           '/api/notice/clear',
           { headers: { 'x-access-token': token } }
         )

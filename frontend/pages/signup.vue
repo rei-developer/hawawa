@@ -29,8 +29,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  
   export default {
     data() {
       return {
@@ -52,7 +50,7 @@
         if (this.authCode === '') return this.$message.error('ID를 입력하세요.')
         if (this.password === '') return this.$message.error('인증 코드를 입력하세요.')
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post('/api/auth/signup', { username: this.username, nickname: this.nickname, email: this.email, authCode: this.authCode, password: this.password })
+        const data = await this.$axios.$post('/api/auth/signup', { username: this.username, nickname: this.nickname, email: this.email, authCode: this.authCode, password: this.password })
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
           return this.$message.error(data.message || '오류가 발생했습니다.')
@@ -64,7 +62,7 @@
       accept: async function() {
         if (this.email === '') return this.$message.error('이메일 주소를 입력하세요.')
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post('/api/auth/accept', { email: this.email })
+        const data = await this.$axios.$post('/api/auth/accept', { email: this.email })
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
           return this.$message.error(data.message || '오류가 발생했습니다.')

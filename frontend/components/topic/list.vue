@@ -162,7 +162,6 @@
 
 <script>
   import Library from '~/assets/lib.js'
-  import axios from 'axios'
   
   export default {
     props: ['id', 'purePage'],
@@ -210,7 +209,7 @@
       getData: async function(forceUpdate = false) {
         this.$store.commit('setLoading', true)
         if (forceUpdate) this.page = 1
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/topic/list',
           {
             domain: this.domain,
@@ -228,7 +227,7 @@
         this.$store.commit('setLoading')
       },
       getCount: async function() {
-        const { data } = await axios.get(`/api/topic/count/${this.domain}`)
+        const data = await this.$axios.$get(`/api/topic/count/${this.domain}`)
         if (data.status === 'fail') return
         this.counts.yesterday = this.numberWithCommas(data.yesterday - data.today)
         this.counts.today = this.numberWithCommas(data.today)
@@ -246,7 +245,7 @@
       unlock: async function(id) {
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.patch(
+        const data = await this.$axios.$patch(
           '/api/topic/edit/notice',
           { id },
           { headers: { 'x-access-token': token } }

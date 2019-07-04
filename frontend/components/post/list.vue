@@ -107,8 +107,7 @@
 
 <script>
   import PostWrite from '~/components/post/write.vue'
-  import axios from 'axios'
-
+  
   export default {
     components: { PostWrite },
     props: ['id', 'topic'],
@@ -152,7 +151,7 @@
       getData: async function() {
         if (this.loading) return
         this.loading = true
-        const { data } = await axios.post('/api/topic/list/post', { id: this.id, page: this.postsPage - 1 })
+        const data = await this.$axios.$post('/api/topic/list/post', { id: this.id, page: this.postsPage - 1 })
         if (data.status === 'fail') {
           this.loading = false
           return this.$message.error(data.message || '오류가 발생했습니다.')
@@ -190,7 +189,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/topic/vote/post',
           { id, likes: flag },
           { headers: { 'x-access-token': token } }
@@ -221,7 +220,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.delete(
+        const data = await this.$axios.$delete(
           '/api/topic/delete/post',
           {
             data: { id, page: this.postsPage },

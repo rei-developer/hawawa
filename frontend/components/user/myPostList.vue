@@ -66,8 +66,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-
   export default {
     data() {
       return {
@@ -84,7 +82,7 @@
       getData: async function() {
         if (this.loading) return
         this.loading = true
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/topic/list/post/me',
           { userId: this.$store.state.user.id, page: this.postsPage - 1 }
         )
@@ -101,7 +99,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
-        const { data } = await axios.delete(
+        const data = await this.$axios.$delete(
           '/api/topic/delete/post',
           {
             data: { id },

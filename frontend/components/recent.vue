@@ -33,8 +33,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-
   export default {
     props: ['domain'],
     data() {
@@ -47,7 +45,7 @@
     },
     methods: {
       getData: async function() {
-        const { data } = await axios.get('/api/topic/list/widget')
+        const data = await this.$axios.$get('/api/topic/list/widget')
         if (!this.topics) return
         this.topics = data.map(i => {
           i.title = i.title.length > 50 ? i.title.substr(0, 50) + '...' : i.title

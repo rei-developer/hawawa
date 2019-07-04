@@ -40,8 +40,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-
   export default {
     props: ['id', 'sticker'],
     data() {
@@ -64,7 +62,7 @@
         if (!this.$store.state.user.isLogged) return
         const token = this.$store.state.user.token
         this.lastDays = 0
-        const { data } = await axios.get(
+        const data = await this.$axios.$get(
           `/api/sticker/list/${this.id}`,
           { headers: { 'x-access-token': token } }
         )
@@ -76,7 +74,7 @@
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.loading = true
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/sticker/buy',
           { id: this.id },
           { headers: { 'x-access-token': token } }

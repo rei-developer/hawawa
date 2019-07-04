@@ -62,7 +62,6 @@
 <script>
   import Library from '~/assets/lib.js'
   import StickerView from '~/components/sticker/view.vue'
-  import axios from 'axios'
   
   export default {
     components: { StickerView },
@@ -88,7 +87,7 @@
     methods: {
       getData: async function() {
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/sticker/list',
           { page: this.page - 1, tags: this.tags }
         )

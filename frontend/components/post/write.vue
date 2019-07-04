@@ -62,8 +62,7 @@
 
 <script>
   import StickerInventory from '~/components/sticker/inventory.vue'
-  import axios from 'axios'
-
+  
   export default {
     components: { StickerInventory },
     props: ['id', 'edit', 'pureContent', 'author', 'topicUserId', 'postUserId', 'postRootId', 'postParentId'],
@@ -87,7 +86,7 @@
         this.loading = true
         let result
         if (this.edit) {
-          const { data } = await axios.patch(
+          const data = await this.$axios.$patch(
             '/api/topic/edit/post',
             {
               id: this.id,
@@ -101,7 +100,7 @@
           )
           result = data
         } else {
-          const { data } = await axios.post('/api/topic/write/post', {
+          const data = await this.$axios.$post('/api/topic/write/post', {
             topicId: this.id,
             topicUserId: this.topicUserId,
             postUserId: this.postUserId,

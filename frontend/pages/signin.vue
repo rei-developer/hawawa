@@ -28,8 +28,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  
   export default {
     data() {
       return {
@@ -59,7 +57,7 @@
         if (this.username === '') return this.$message.error('ID를 입력하세요.')
         if (this.password === '') return this.$message.error('비밀번호를 입력하세요.')
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post('/api/auth/signin', { username: this.username, password: this.password })
+        const data = await this.$axios.$post('/api/auth/signin', { username: this.username, password: this.password })
         if (data.status === 'fail') {
           this.$store.commit('setLoading')
           return this.$message.error(data.message || '오류가 발생했습니다.')

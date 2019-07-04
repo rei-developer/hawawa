@@ -30,8 +30,7 @@
   import Header from '~/components/header.vue'
   import SideMenu from '~/components/sideMenu.vue'
   import Footer from '~/components/footer.vue'
-  import axios from 'axios'
-
+  
   export default {
     components: {
       Loading,
@@ -42,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 51
+        frontendVersion: 52
       }
     },
     beforeMount() {
@@ -79,13 +78,13 @@
     },
     methods: {
       checkVersion: async function() {
-        const { data } = await axios.get('/api/version')
+        const data = await this.$axios.$get('/api/version')
         this.backendVersion = data.version || 0
       },
       checkLogged: async function() {
         const token = localStorage.token
         if (!token) return
-        const { data } = await axios.get(
+        const data = await this.$axios.$get(
           '/api/auth/check',
           { headers: { 'x-access-token': token } }
         )
@@ -96,7 +95,7 @@
       getNotices: async function() {
         const token = localStorage.token
         if (!token) return
-        const { data } = await axios.get(
+        const data = await this.$axios.$get(
           '/api/notice',
           { headers: { 'x-access-token': token } }
         )

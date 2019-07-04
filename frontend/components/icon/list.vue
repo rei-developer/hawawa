@@ -43,8 +43,7 @@
 
 <script>
   import Library from '~/assets/lib.js'
-  import axios from 'axios'
-  
+
   export default {
     data() {
       return {
@@ -60,7 +59,7 @@
     methods: {
       getData: async function() {
         this.$store.commit('setLoading', true)
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/icon/list',
           { page: this.page - 1 }
         )
@@ -81,7 +80,7 @@
       buy: async function(item) {
         const token = this.$store.state.user.token
         this.loading = true
-        const { data } = await axios.post(
+        const data = await this.$axios.$post(
           '/api/icon/buy',
           { id: item.id },
           { headers: { 'x-access-token': token } }

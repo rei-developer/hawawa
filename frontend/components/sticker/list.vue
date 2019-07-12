@@ -148,7 +148,7 @@
   }
   .stickerList .item .info { padding-bottom: .25rem }
   .stickerList .item .info .name {
-    color: #409EFF;
+    color: #25c6ff;
     font-size: .8rem;
     font-weight: bold;
     text-align: center;

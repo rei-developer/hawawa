@@ -69,7 +69,7 @@
         <el-input class='marginBottom input-with-select' size='small' :value='`${numberWithCommas(exp)} / ${numberWithCommas(maxExp)} (${per}%)`' readonly>
           <el-button class='editPrepend' slot='prepend'>경험치</el-button>
         </el-input>
-        <el-progress class='marginBottom' :text-inside='true' :stroke-width='20' :percentage='per' color='#409EFF'></el-progress>
+        <el-progress class='marginBottom' :text-inside='true' :stroke-width='20' :percentage='per' color='#25c6ff'></el-progress>
         <el-button class='widthAll' type='primary' size='small' @click='edit'>편집</el-button>
       </div>
     </div>

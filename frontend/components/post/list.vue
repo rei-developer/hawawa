@@ -368,7 +368,7 @@
     border-radius: .25rem;
   }
   .postList .item .info .desciption span.writer {
-    color: #409EFF;
+    color: #25c6ff;
     font-weight: bold;
   }
   .postList .item .info .desciption span.tagUser {

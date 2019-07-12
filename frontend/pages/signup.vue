@@ -1,28 +1,21 @@
 <template>
   <div>
     <div class='accountBox'>
-      <div class='header'>
-        <nuxt-link to='/'>
-          <img src='~/assets/Logo.png'>
-        </nuxt-link>
-      </div>
       <div class='article'>
-        <el-input class='marginBottom' size='small' placeholder='ID' v-model='username' autofocus />
-        <el-input class='marginBottom' size='small' placeholder='비밀번호' v-model='password' show-password />
-        <el-input class='marginBottom' size='small' placeholder='닉네임' v-model='nickname' />
-        <el-input class='marginBottom input-with-select' size='small' placeholder='이메일 주소' v-model='email'>
+        <div class='header'>
+          <nuxt-link to='/'>
+            <img src='~/assets/Logo.png'>
+          </nuxt-link>
+        </div>
+        <div class='title'>회원가입</div>
+        <el-input placeholder='ID' v-model='username' autofocus />
+        <el-input placeholder='비밀번호' v-model='password' show-password />
+        <el-input placeholder='닉네임' v-model='nickname' />
+        <el-input class='input-with-select' placeholder='이메일 주소' v-model='email'>
           <el-button slot='append' @click='accept'>전송</el-button>
         </el-input>
-        <el-input class='marginBottom' size='small' placeholder='인증 코드' v-model='authCode' />
-        <el-button class='widthAll' type='primary' size='small' @click='signUp'>
-          <font-awesome-icon icon='user-edit' />
-          계정 생성
-        </el-button>
-      </div>
-    </div>
-    <div class='accountBox'>
-      <div class='article'>
-        <div class='signIn' @click='signIn'>계정이 있으시다면 로그인하세요</div>
+        <el-input class='marginBottom' placeholder='인증 코드' v-model='authCode' />
+        <el-button class='widthAll' type='primary' @click='signUp'>다음</el-button>
       </div>
     </div>
   </div>
@@ -30,6 +23,7 @@
 
 <script>
   export default {
+    layout: 'sign',
     data() {
       return {
         username: '',
@@ -82,36 +76,37 @@
 
   /* Account Box */
   .accountBox {
-    width: 330px;
-    margin: 0 auto;
-  }
-  .accountBox .header {
-    width: 300px;
-    margin: 5rem auto 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 360px;
+    margin-top: -200px;
+    margin-left: -115px;
+    -ms-overflow-style: none;
   }
   .accountBox .article {
     width: 100%;
-    padding: .5rem;
-    margin-bottom: 4rem;
+    padding: 1rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, .08);
-    background: #FFF;
+    border-radius: .2rem;
+    background: rgba(255, 255, 255, .95);
   }
-  .accountBox .article:last-child {
-    margin-bottom: 1rem;
+  .accountBox .article .header {
+    width: 280px;
+    margin: .5rem auto 1rem;
+  }
+  .accountBox .article .title {
+    color: #757c80;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .accountBox .article .saveId {
+    margin-top: 10px;
+    color: #333;
+    font-size: .8rem;
+    float: right;
   }
 
-  /* Sign In */
-  .signIn {
-    width: 100%;
-    padding: .5rem 0;
-    border-radius: .5rem;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    color: #67C23A;
-    font-size: .8rem;
-    text-align: center;
-    cursor: pointer;
-  }
-  .signIn:hover {
-    background: rgba(103, 194, 58, .1);
-  }
+  ::-webkit-scrollbar { display:none }
 </style>

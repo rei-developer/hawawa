@@ -78,7 +78,7 @@
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
     background-color: #FFF;
-    color: #409EFF;
+    color: #25c6ff;
     font-size: .8rem;
     font-weight: bold;
   }

@@ -1,13 +1,13 @@
 <template>
   <div class='accountBox'>
-    <div class='header'>
-      <nuxt-link to='/'>
-        <img src='~/assets/Logo.png'>
-      </nuxt-link>
-    </div>
     <div class='article'>
-      <el-input class='marginBottom' size='small' placeholder='ID' v-model='username' autofocus />
-      <el-input class='marginBottom' size='small' placeholder='비밀번호' v-model='password' show-password />
+      <div class='header'>
+        <nuxt-link to='/'>
+          <img src='~/assets/Logo.png'>
+        </nuxt-link>
+      </div>
+      <el-input placeholder='ID' v-model='username' autofocus />
+      <el-input class='marginBottom' placeholder='비밀번호' v-model='password' show-password />
       <el-button-group>
         <el-button type='info' size='small' @click='signUp'>계정 생성</el-button>
         <el-button type='primary' size='small' @click='signIn'>
@@ -29,6 +29,7 @@
 
 <script>
   export default {
+    layout: 'sign',
     data() {
       return {
         username: '',
@@ -80,18 +81,23 @@
 
   /* Account Box */
   .accountBox {
-    width: 330px;
-    margin: 0 auto;
-  }
-  .accountBox .header {
-    width: 300px;
-    margin: 5rem auto 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 360px;
+    margin-top: -115px;
+    margin-left: -115px;
   }
   .accountBox .article {
     width: 100%;
-    padding: .5rem;
+    padding: 1rem;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, .08);
-    background: #FFF;
+    border-radius: .2rem;
+    background: rgba(255, 255, 255, .95);
+  }
+  .accountBox .article .header {
+    width: 280px;
+    margin: .5rem auto 1rem;
   }
   .accountBox .article .saveId {
     margin-top: 10px;
@@ -99,4 +105,6 @@
     font-size: .8rem;
     float: right;
   }
+
+  ::-webkit-scrollbar { display:none }
 </style>

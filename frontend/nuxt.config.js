@@ -18,7 +18,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#409EFF' },
+  loading: { color: '#25c6ff' },
   /*
   ** Build configuration
   */
@@ -26,7 +26,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -43,6 +43,7 @@ module.exports = {
     '~/plugins/element-ui',
     { src: '~/plugins/quill.js', ssr: false },
     { src: '~/plugins/chart', ssr: false },
+    { src: '~/plugins/vue-masonry-css.js', ssr: false }
   ],
   css: [
     '~/assets/main.css',

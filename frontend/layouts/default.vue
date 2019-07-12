@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 53
+        frontendVersion: 54
       }
     },
     beforeMount() {
@@ -167,7 +167,7 @@
     cursor: pointer;
   }
   .notify.best {
-    background: #409EFF;
+    background: #25c6ff;
   }
   .notify.best .el-notification__title,
   .notify.best .el-notification__content,

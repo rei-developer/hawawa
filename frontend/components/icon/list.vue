@@ -139,7 +139,7 @@
   }
   .iconshopList .item .info { padding-bottom: .25rem }
   .iconshopList .item .info .name {
-    color: #409EFF;
+    color: #25c6ff;
     font-size: .8rem;
     font-weight: bold;
     text-align: center;

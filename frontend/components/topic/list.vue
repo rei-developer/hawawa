@@ -367,11 +367,11 @@
     background: #EAEAEA;
     color: #29313D;
   }
-  .topicList .item .info .subject span.newest { background: #409EFF }
+  .topicList .item .info .subject span.newest { background: #25c6ff }
   .topicList .item .info .subject span.posts { background: #999 }
-  .topicList .item .info .subject span.image { color: #409EFF }
+  .topicList .item .info .subject span.image { color: #25c6ff }
   .topicList .item .info .subject span.view {
-    color: #409EFF;
+    color: #25c6ff;
     font-weight: bold;
   }
   .topicList .item .info .author {

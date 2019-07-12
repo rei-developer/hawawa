@@ -164,6 +164,7 @@ module.exports.topics = async (columns, searches, page, limit) => {
         t.isNotice,
         tc.hits,
         tc.likes,
+        u.profileImageUrl profile,
         u.level,
         u.icon,
         u.isAdmin admin,
@@ -176,8 +177,8 @@ module.exports.topics = async (columns, searches, page, limit) => {
       ORDER BY t.id DESC
       LIMIT ?, ?`,
       searches.text === ''
-      ? [...values, page * limit, limit]
-      : [...values, ...data, page * limit, limit]
+        ? [...values, page * limit, limit]
+        : [...values, ...data, page * limit, limit]
     )
     if (result.length < 1) return false
     return result

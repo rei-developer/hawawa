@@ -170,11 +170,11 @@
     font-size: .7rem;
   }
   .myTopicList .item .info .subject span.category { background: #29313D }
-  .myTopicList .item .info .subject span.newest { background: #409EFF }
+  .myTopicList .item .info .subject span.newest { background: #25c6ff }
   .myTopicList .item .info .subject span.posts { background: #999 }
-  .myTopicList .item .info .subject span.image { color: #409EFF }
+  .myTopicList .item .info .subject span.image { color: #25c6ff }
   .myTopicList .item .info .subject span.view {
-    color: #409EFF;
+    color: #25c6ff;
     font-weight: bold;
   }
   .myTopicList .item .info .author {

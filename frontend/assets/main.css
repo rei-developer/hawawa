@@ -71,9 +71,17 @@ hr {
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
   z-index: 10000;
 }
+
+.el-button--small {
+  height: 32px !important;
+}
+.el-button--info {
+  border-color: #6d7084 !important;
+  background-color: #6d7084 !important;
+}
 .el-button--primary {
-  border-color: #29313D !important;
-  background-color: #29313D !important;
+  border-color: #25c6ff !important;
+  background-color: #25c6ff !important;
 }
 .el-button--warning {
   border-color: #FFC90E !important;
@@ -83,13 +91,14 @@ hr {
   border-color: #ED1C24 !important;
   background-color: #ED1C24 !important;
 }
+.el-button--info:hover,
 .el-button--primary:hover,
 .el-button--warning:hover,
 .el-button--danger:hover {
   opacity: .8;
 }
 .el-radio-button span:hover {
-  color: #409EFF !important;
+  color: #25c6ff !important;
 }
 .el-radio-button.is-active span {
   background-color: #29313D !important;

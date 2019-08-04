@@ -304,20 +304,21 @@
   .topicList {
     display: flex;
     flex-direction: column;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #EEE;
   }
   .topicList .item {
     display: flex;
-    border-bottom: 1px solid #F5F5F5;
-    background: rgba(255, 255, 255, .5);
-  }
-  .topicList .item:hover {
-    background: rgba(245, 245, 245, .5);
-    cursor: pointer;
+    border-bottom: 1px solid #EEE;
+    background: #FFF;
   }
   .topicList .item.odd,
-  .topicList .item.view { background: rgba(245, 245, 245, .5) }
-  .topicList .item.view { border-left: .25rem solid #29313D }
+  .topicList .item.view { background: #FBFBFB }
+  .topicList .item.view { border-left: .3rem solid #25c6ff }
+  .topicList .item:hover,
+  .topicList .item.view:hover {
+    background: #F0F0F0;
+    cursor: pointer;
+  }
   .topicList .item .image {
     display: flex;
     flex-direction: column;
@@ -326,9 +327,7 @@
     width: 3.5rem;
     height: 3.5rem;
     margin: .25rem;
-    padding: 2px;
-    border: 1px solid #CCC;
-    border-radius: .25rem;
+    border-radius: .2rem;
     background: #FFF;
   }
   .topicList .item .info {

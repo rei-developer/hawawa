@@ -86,7 +86,8 @@
     position: relative;
     margin-bottom: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    background-position: #FFF;
+    background-image: url(/navbg.jpg);
+    background-color: #FFF;
     overflow: visible;
     z-index: 1;
   }
@@ -97,6 +98,7 @@
     border-bottom-color: transparent !important;
   }
   .Logo:hover {
+    background-color: transparent !important;
     opacity: 0.8;
   }
   .Logo img {

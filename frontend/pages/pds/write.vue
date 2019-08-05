@@ -12,24 +12,26 @@
         </div>
         <div class='containerSubject'>
           <font-awesome-icon icon='pencil-alt' />
-          자료실 글 작성
+          자료실 업로드
         </div>
         <div class='topicWrite'>
           <div class='marginBottom' v-if='$store.state.user.isLogged && $store.state.user.isAdmin > 0'>
             <el-switch v-model='form.isNotice' active-color='#29313D'></el-switch>
             공지사항
           </div>
-          <div class='marginBottom' v-if='categories.length > 0'>
-            <el-radio-group v-model='form.category' size='small'>
-              <el-radio-button
-                :label='item.name'
-                @click='form.category = item.name'
-                v-for='(item, index) in categories' :key='index' />
-            </el-radio-group>
-          </div>
           <div class='marginBottom'>
             <el-input size='medium' placeholder='100자 제한' v-model='form.title' autofocus>
               <template slot='prepend'>제목</template>
+            </el-input>
+          </div>
+          <div class='marginBottom'>
+            <el-input size='medium' placeholder='메가 URL 링크' v-model='form.url'>
+              <template slot='prepend'>메가 URL 링크</template>
+            </el-input>
+          </div>
+          <div class='marginBottom'>
+            <el-input size='medium' value='20' placeholder='다운로드 가격' v-model='form.cost'>
+              <template slot='prepend'>다운로드 가격</template>
             </el-input>
           </div>
           <div class='event' @click='htmlMode = !htmlMode'>
@@ -41,17 +43,6 @@
               <font-awesome-icon icon='code' />
               HTML 모드
             </span>
-          </div>
-          <div class='event' @click='charts.hide = !charts.hide'>
-            <font-awesome-icon icon='chart-pie' />
-            설문조사 생성
-          </div>
-          <div class='marginBottom' v-if='!charts.hide'>
-            <textarea
-              class='chart'
-              :rows='3'
-              placeholder='설문조사 목록은 개행(Enter)으로 구분해주세요.'
-              v-model='charts.content' />
           </div>
           <div v-if='htmlMode'>
             <textarea
@@ -86,7 +77,7 @@
           </div>
         </div>
         <div class='marginVertical'>
-          <el-button class='widthAll' type='primary' size='medium' @click='write'>작성</el-button>
+          <el-button class='widthAll' type='primary' size='medium' @click='write'>업로드</el-button>
         </div>
       </el-col>
       <el-col :xl='4' hidden-lg-and-down><div class='blank'></div></el-col>
@@ -103,6 +94,8 @@
     data() {
       return {
         form: {
+          url: '',
+          cost: 20,
           title: '',
           content: '<p></p>',
           isNotice: false
@@ -117,13 +110,17 @@
     methods: {
       write: async function() {
         if (this.loading) return
+        if (this.form.title === '') return this.$message.error('메가 URL 링크를 입력하세요.')
+        if (this.form.cost < 20) return this.$message.error('다운로드 가격은 20 이상으로 설정하세요.')
         if (this.form.title === '') return this.$message.error('제목을 입력하세요.')
         if (this.form.content === '' || this.form.content === '<p></p>') return this.$message.error('본문을 입력하세요.')
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.loading = true
-        const data = await this.$axios.$post('/api/topic/write', {
+        const data = await this.$axios.$post('/api/pds/write', {
           isNotice: this.form.isNotice,
+          url: this.form.url,
+          cost: this.form.cost,
           title: this.form.title,
           content: this.form.content,
           images: this.images
@@ -134,7 +131,7 @@
           this.loading = false
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
-        this.$router.push({ path: `/pds/${data.topicId}` })
+        this.$router.push({ path: `/pds/${data.pdsId}` })
       },
       imageUpload: async function(e) {
         if (this.loading || e.target.files.length < 1) return
@@ -152,7 +149,7 @@
         else if (files[index].size > LIMITS) this.$message.error(`${index + 1}번째 이미지 업로드 실패... (10MB 이하만 업로드 가능)`)
         else {
           const data = await this.$axios.$post(
-            '/api/cloud/topic',
+            '/api/cloud/pds',
             formData,
             { headers: { 'content-type': 'multipart/form-data' } }
           )

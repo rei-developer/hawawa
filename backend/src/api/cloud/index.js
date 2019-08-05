@@ -1,7 +1,7 @@
-const Router      = require('koa-router')
-const multer      = require('koa-multer')
-const uuidv5      = require('uuid/v5')
-const Controller  = require('./controller')
+const Router = require('koa-router')
+const multer = require('koa-multer')
+const uuidv5 = require('uuid/v5')
+const Controller = require('./controller')
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -19,6 +19,7 @@ const upload = multer({ storage, limits: { fileSize: 10485760 } })
 const app = new Router()
 
 app.post('/profile', upload.single('image'), Controller.createImage())
+app.post('/pds', upload.single('image'), Controller.createImage('topic'))
 app.post('/topic', upload.single('image'), Controller.createImage('topic'))
 
 module.exports = app

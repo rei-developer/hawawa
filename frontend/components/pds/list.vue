@@ -68,7 +68,7 @@
       </div>
       <div
         :class='id == item.id ? "item view" : (index % 2 === 0 ? "item" : "item odd")'
-        v-for='(item, index) in topics' :key='index'>
+        v-for='(item, index) in pds' :key='index'>
         <div class='image' @click='move(item)'>
           <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
         </div>
@@ -146,7 +146,7 @@
     data() {
       return {
         notices: [],
-        topics: [],
+        pds: [],
         counts: {
           count: 0,
           yesterday: 0,
@@ -180,7 +180,7 @@
         this.$store.commit('setLoading', true)
         if (forceUpdate) this.page = 1
         const data = await this.$axios.$post(
-          '/api/topic/list',
+          '/api/pds/list',
           {
             searches: this.searches,
             page: this.page - 1
@@ -188,12 +188,12 @@
         )
         this.notices = []
         if (data.notices) this.notices = data.notices
-        this.topics = data.topics
+        this.pds = data.pds
         this.counts.count = data.count
         this.$store.commit('setLoading')
       },
       getCount: async function() {
-        const data = await this.$axios.$get(`/api/topic/count/${this.domain}`)
+        const data = await this.$axios.$get(`/api/pds/count`)
         if (data.status === 'fail') return
         this.counts.yesterday = this.numberWithCommas(data.yesterday - data.today)
         this.counts.today = this.numberWithCommas(data.today)

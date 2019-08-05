@@ -21,7 +21,7 @@
                 <nuxt-link :to='`/pds/write`' v-if='$store.state.user.isLogged'>
                   <el-button class='floatRight' type='primary' size='small'>
                     <font-awesome-icon icon='pencil-alt' />
-                    글 작성
+                    업로드
                   </el-button>
                 </nuxt-link>
               </div>
@@ -29,21 +29,21 @@
               <div class='topicArticle'>
                 <div class='header'>
                   <div class='image'>
-                    <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
+                    <img :src='pds.profile ? "https://hawawa.co.kr/profile/" + pds.profile : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>
-                      <span class='star' v-if='topic.isBest > 0'>
-                        <img :src='topic.isBest > 1 ? "/star.svg" : "/burn.svg"'>
+                      <span class='star' v-if='pds.isBest > 0'>
+                        <img :src='pds.isBest > 1 ? "/star.svg" : "/burn.svg"'>
                       </span>
-                      <span class='notice' v-if='topic.isNotice > 0'>NOTICE</span>
-                      {{ topic.title }}
+                      <span class='notice' v-if='pds.isNotice > 0'>NOTICE</span>
+                      {{ pds.title }}
                     </div>
                     <div class='author'>
-                      <img :src='`/level/${topic.level}.png`'>
-                      <img class='icon' :src='`https://hawawa.co.kr/icon/${topic.icon}`' v-if='topic.icon !== ""'>
-                      <span class='userTitle' v-if='topic.userTitle'>{{ topic.userTitle }}</span>
-                      {{ topic.author }}
+                      <img :src='`/level/${pds.level}.png`'>
+                      <img class='icon' :src='`https://hawawa.co.kr/icon/${pds.icon}`' v-if='pds.icon !== ""'>
+                      <span class='userTitle' v-if='pds.userTitle'>{{ pds.userTitle }}</span>
+                      {{ pds.author }}
                     </div>
                     <div class='detail'>
                       <span>
@@ -52,36 +52,36 @@
                       </span>
                       <span>
                         <font-awesome-icon icon='clock' />
-                        {{ $moment(topic.created).fromNow() }}
+                        {{ $moment(pds.created).fromNow() }}
                       </span>
-                      <span v-if='topic.hits > 0'>
+                      <span v-if='pds.hits > 0'>
                         <font-awesome-icon icon='eye' />
-                        {{ numberWithCommas(topic.hits) }}
+                        {{ numberWithCommas(pds.hits) }}
                       </span>
-                      <span v-if='topic.likes > 0'>
+                      <span v-if='pds.likes > 0'>
                         <font-awesome-icon icon='heart' />
-                        +{{ numberWithCommas(topic.likes) }}
+                        +{{ numberWithCommas(pds.likes) }}
                       </span>
                     </div>
                   </div>
                 </div>
                 <div class='content'>
-                  <span v-html='topic.content' />
+                  <span v-html='pds.content' />
                   <div class='event'>
                     <el-button-group>
                       <el-button type='primary' size='small' round @click='votes(true)'>
                         <img src='/up.png'>
-                        하와와 {{ topic.likes }}
+                        좋아요 {{ pds.likes }}
                       </el-button>
                       <el-button type='info' size='small' round @click='votes(false)'>
-                        문재앙 {{ topic.hates }}
+                        나빠요 {{ pds.hates }}
                         <img src='/down.png'>
                       </el-button>
                     </el-button-group>
                   </div>
                 </div>
               </div>
-              <div>
+              <div class='marginTop'>
                 <nuxt-link :to='`/pds`'>
                   <el-button type='info' size='small'>목록</el-button>
                 </nuxt-link>
@@ -89,13 +89,13 @@
                   type='info'
                   size='small'
                   @click='removeHandler'
-                  v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || topic.userId === $store.state.user.id)'>
+                  v-if='$store.state.user.isLogged && ($store.state.user.isAdmin > 0 || pds.userId === $store.state.user.id)'>
                   삭제
                 </el-button>
                 <nuxt-link :to='`/pds/write`' v-if='$store.state.user.isLogged'>
                   <el-button class='floatRight' type='primary' size='small'>
                     <font-awesome-icon icon='pencil-alt' />
-                    글 작성
+                    업로드
                   </el-button>
                 </nuxt-link>
               </div>
@@ -125,15 +125,16 @@
     },
     data() {
       return {
-        domain: '',
         id: 0,
-        topic: {
+        pds: {
           userId: 0,
           author: '',
           title: '',
           content: '',
           ip: '',
           header: '',
+          url: '',
+          cost: 0,
           created: '',
           updated: '',
           hits: 0,
@@ -151,30 +152,16 @@
       const id = params.id
       const token = store.state.user.isLogged ? store.state.user.token : ''
       const data = await $axios.$get(
-        `/api/topic/read/${id}`,
+        `/api/pds/read/${id}`,
         { headers: { 'x-access-token': token } }
       )
       if (data.status === 'fail') return console.log(data.message)
       if (store.state.user.isLogged) store.commit('user/setNoticeCount', data.count)
-      const charts = data.charts ? data.charts.map(item => item.text) : []
-      const chartVotes = []
-      if (data.chartVotes) data.chartVotes.map(item => chartVotes[item.select] = item.count)
       return {
         id,
-        topic: data.topic,
+        pds: data.pds,
         images: data.images
       }
-    },
-    beforeMount() {
-      this.$socket.emit('join', this.id)
-      this.$socket.on('vote', data => {
-        this.topic.likes = data.likes
-        this.topic.hates = data.hates
-      })
-    },
-    beforeDestroy() {
-      this.$socket.emit('leave', this.id)
-      this.$socket.removeAllListeners()
     },
     methods: {
       votes: async function(flag) {
@@ -183,7 +170,7 @@
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
         const data = await this.$axios.$post(
-          '/api/topic/vote',
+          '/api/pds/vote',
           { id: this.id, likes: flag },
           { headers: { 'x-access-token': token } }
         )
@@ -191,7 +178,7 @@
           this.$store.commit('setLoading')
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
-        data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다.') : this.$message('투표했습니다.')
+        this.$message('투표했습니다.')
         this.$store.commit('setLoading')
       },
       removeHandler: async function() {
@@ -207,7 +194,7 @@
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
         const data = await this.$axios.$delete(
-          '/api/topic/delete',
+          '/api/pds/delete',
           {
             data: { id: this.id },
             headers: { 'x-access-token': token }
@@ -230,7 +217,7 @@
     },
     head() {
       return {
-        title: `${this.topic.title} - 하와와`
+        title: `${this.pds.title} - 하와와`
       }
     }
   }

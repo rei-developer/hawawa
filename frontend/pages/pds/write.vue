@@ -30,7 +30,7 @@
             </el-input>
           </div>
           <div class='marginBottom'>
-            <el-input size='medium' value='20' placeholder='다운로드 가격' v-model='form.cost'>
+            <el-input type='number' size='medium' value='20' placeholder='다운로드 가격' v-model='form.cost'>
               <template slot='prepend'>다운로드 가격</template>
             </el-input>
           </div>

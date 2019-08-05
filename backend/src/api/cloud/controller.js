@@ -17,12 +17,13 @@ module.exports.createImage = type => async ctx => {
   } catch (e) {
     ctx.body = { message: e.message, status: 'fail' }
   }
-}*/
+}
+*/
 
-const fs            = require('fs')
-const sharp         = require('sharp')
-const { execFile }  = require('child_process')
-const giflossy      = require('giflossy')
+const fs = require('fs')
+const sharp = require('sharp')
+const { execFile } = require('child_process')
+const giflossy = require('giflossy')
 
 module.exports.createImage = type => async ctx => {
   const checker = /(.gif|.png|.jpg|.jpeg|.webp)/i.test(ctx.req.file.originalname)
@@ -45,6 +46,13 @@ module.exports.createImage = type => async ctx => {
                 .toBuffer()
               )
               .then(result => fs.writeFile(`./img/${filename}`, result, () => { }))
+          } else if (type === 'background') {
+            image.metadata()
+              .then((metadata) => image.resize(Math.min(metadata.width, 960))
+                .jpeg(80)
+                .toBuffer()
+              )
+              .then(result => fs.writeFile(`./background/${filename}`, result, () => fs.unlink(`./img/${filename}`, () => { })))
           } else {
             image.metadata()
               .then(() => image.resize(100, 100)

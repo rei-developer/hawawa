@@ -28,7 +28,8 @@
               </div>
               <div class='Blank' />
               <div class='topicArticle'>
-                <div class='header'>
+                <div class='header' :style='topic.background ? `background-image: url(/background.png)` : ""'>
+                  <div class='background' />
                   <div class='image'>
                     <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
                   </div>
@@ -333,8 +334,19 @@
   }
   .topicArticle .header {
     display: flex;
+    position: relative;
     padding: .5rem;
     border-bottom: 1px solid #EEE;
+    background-size: cover;
+    background-repeat: repeat;
+  }
+  .topicArticle .header .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(255, 255, 255, .5), transparent);
   }
   .topicArticle .header .image {
     display: flex;
@@ -346,7 +358,8 @@
     height: 4.5rem;
     padding: 2px;
     border-radius: 500rem;
-    box-shadow: 1px 1px 5px rgba(41, 49, 61, .2);
+    box-shadow: 1px 1px 5px rgba(41, 49, 61, .3);
+    background: #FFF;
   }
   .topicArticle .header .info {
     display: flex;
@@ -393,7 +406,7 @@
   }
   .topicArticle .header .info .detail span {
     margin-right: .25rem;
-    color: #999;
+    color: #29313D;
     font-size: .7rem;
     font-weight: normal;
   }

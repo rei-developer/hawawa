@@ -5,6 +5,7 @@ export const state = () => ({
   nickname: '',
   email: '',
   profileImageUrl: null,
+  backgroundImageUrl: null,
   registerDate: null,
   blockDate: null,
   level: 0,
@@ -24,6 +25,7 @@ export const mutations = {
     state.nickname = data.user.nickname
     state.email = data.user.email
     state.profileImageUrl = data.user.profileImageUrl ? `https://hawawa.co.kr/profile/${data.user.profileImageUrl}` : '/profile.png'
+    state.backgroundImageUrl = data.user.backgroundImageUrl ? `https://hawawa.co.kr/background/${data.user.backgroundImageUrl}` : null
     state.registerDate = data.user.registerDate
     state.blockDate = data.user.blockDate
     state.level = data.user.level
@@ -36,6 +38,7 @@ export const mutations = {
   setUsername: (state, username) => state.username = username,
   setNickname: (state, nickname) => state.nickname = nickname,
   setProfileImageUrl: (state, url) => state.profileImageUrl = `https://hawawa.co.kr/profile/${url}`,
+  setBackgroundImageUrl: (state, url) => state.backgroundImageUrl = `https://hawawa.co.kr/background/${url}`,
   setIcon: (state, filename) => state.icon = filename,
   setNoticeCount: (state, count) => state.noticeCount = count,
   setUpPoint: (state, point) => state.point += point,

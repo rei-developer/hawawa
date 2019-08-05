@@ -2,12 +2,18 @@
   <div>
     <div class='accountBox'>
       <div class='header'>프로필 편집</div>
-      <el-tooltip class='item' effect='dark' content='프로필 사진을 변경할 수 있습니다.' placement='bottom'>
-        <div class='profile'>
-          <img :src='$store.state.user.profileImageUrl'>
-          <input type='file' @change='imageUpload' />
-        </div>
-      </el-tooltip>
+      <div class='profile' :style='$store.state.user.backgroundImageUrl ? `background-image: url(${$store.state.user.backgroundImageUrl})` : "background-image: url(/background.png)"'>
+        <el-tooltip class='item' effect='dark' content='배경사진을 변경할 수 있습니다.' placement='bottom'>
+          <div class='background'>
+            <font-awesome-icon icon='camera' />
+            <input type='file' @change='backgroundImageUpload' />
+          </div>
+        </el-tooltip>
+        <img :src='$store.state.user.profileImageUrl'>
+        <el-tooltip class='item' effect='dark' content='프로필 사진을 변경할 수 있습니다.' placement='bottom'>
+          <input type='file' @change='profileImageUpload' />
+        </el-tooltip>
+      </div>
       <div class='article'>
         <div class='title'>
           <font-awesome-icon icon='id-badge' />
@@ -105,7 +111,7 @@
         this.maxExp = Math.pow(this.$store.state.user.level, 2) * 90
         this.per = (this.exp / this.maxExp * 100).toFixed(2)
       },
-      imageUpload: async function(e) {
+      profileImageUpload: async function(e) {
         if (this.loading || e.target.files.length < 1) return
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
@@ -130,6 +136,31 @@
         }
         this.editByProfileImage(token, data.filename)
       },
+      backgroundImageUpload: async function(e) {
+        if (this.loading || e.target.files.length < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        const LIMITS = 10485760
+        const file = e.target.files[0]
+        const formData = new FormData()
+        formData.append('type', 'file')
+        formData.append('image', file, file.name)
+        if (!/(.png|.jpg|.jpeg)/i.test(file.name)) return this.$message.error('이미지 업로드 실패... (png, jpg, jpeg만 가능)')
+        if (file.size > LIMITS) return this.$message.error('이미지 업로드 실패... (10MB 이하만 업로드 가능)')
+        this.loading = true
+        this.$store.commit('setLoading', true)
+        const data = await this.$axios.$post(
+          '/api/cloud/background',
+          formData,
+          { headers: { 'content-type': 'multipart/form-data' } }
+        )
+        if (data.status === 'fail') {
+          this.loading = false
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message || '오류가 발생했습니다.')
+        }
+        this.editByBackgroundImage(token, data.filename)
+      },
       editByProfileImage: async function(token, url) {
         const data = await this.$axios.$patch(
           '/api/auth/edit/profile',
@@ -141,6 +172,18 @@
         if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
         this.$message.success('프로필 사진을 업로드했습니다.')
         this.$store.commit('user/setProfileImageUrl', url)
+      },
+      editByBackgroundImage: async function(token, url) {
+        const data = await this.$axios.$patch(
+          '/api/auth/edit/background',
+          { url },
+          { headers: { 'x-access-token': token } }
+        )
+        this.loading = false
+        this.$store.commit('setLoading')
+        if (data.status === 'fail') return this.$message.error(data.message || '오류가 발생했습니다.')
+        this.$message.success('배경사진을 업로드했습니다.')
+        this.$store.commit('user/setBackgroundImageUrl', url)
       },
       edit: async function() {
         if (this.newPassword !== this.newPassword2) return this.$message.error('새 암호가 서로 다릅니다.')
@@ -199,11 +242,10 @@
     text-align: center;
   }
   .accountBox .profile {
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  .accountBox .profile:hover {
-    opacity: .8;
+    position: relative;
+    height: 5.1rem;
+    margin-bottom: .5rem;
+    border: 1px solid #EEE;
   }
   .accountBox .profile img {
     width: 5rem;
@@ -223,11 +265,29 @@
   .accountBox .profile input:hover {
     cursor: pointer;
   }
+  .accountBox .profile .background {
+    position: absolute;
+    right: .5rem;
+    bottom: .5rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    line-height: 2rem;
+    border-radius: 500rem;
+    background: #29313D;
+    color: #FFF;
+    font-size: 1.2rem;
+    text-align: center;
+    opacity: .5;
+  }
+  .accountBox .profile .background:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
   .accountBox .article {
     width: 100%;
     padding: .5rem;
     margin-bottom: 4rem;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, .08);
+    border: 1px solid #EEE;
     background: #FFF;
   }
   .accountBox .article:last-child {

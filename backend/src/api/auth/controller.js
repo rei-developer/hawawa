@@ -106,12 +106,22 @@ exports.updateUserByIsVerified = async ctx => {
 exports.updateUserByProfileImage = async ctx => {
   const { url } = ctx.request.body
   if (url === '') return
-  if (/imgur/.test(url)) return ctx.body = { message: '최신 버전으로 업데이트하세요.', status: 'fail' }
   const user = await User.getUser(ctx.get('x-access-token'))
   if (!user) return
   const getProfileImageUrl = await readUser.profileImageUrl(user.id)
   if (getProfileImageUrl && getProfileImageUrl !== '') fs.unlink(`./profile/${getProfileImageUrl}`, () => { })
   await updateUser({ profileImageUrl: url }, user.id)
+  ctx.body = { status: 'ok' }
+}
+
+exports.updateUserByBackgroundImage = async ctx => {
+  const { url } = ctx.request.body
+  if (url === '') return
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  const getBackgroundImageUrl = await readUser.backgroundImageUrl(user.id)
+  if (getBackgroundImageUrl && getBackgroundImageUrl !== '') fs.unlink(`./background/${getBackgroundImageUrl}`, () => { })
+  await updateUser({ backgroundImageUrl: url }, user.id)
   ctx.body = { status: 'ok' }
 }
 

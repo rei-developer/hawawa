@@ -13,7 +13,7 @@
           <font-awesome-icon icon='id-badge' />
           기본 정보
         </div>
-        <el-input class='marginBottom input-with-select' size='small' :value='$store.state.user.username' readonly>
+        <el-input class='marginBottom input-with-select' size='small' :placeholder='$store.state.user.username' v-model='username'>
           <el-button class='editPrepend' slot='prepend'>ID</el-button>
         </el-input>
         <el-input class='marginBottom input-with-select' size='small' :placeholder='$store.state.user.nickname' v-model='nickname' autofocus>
@@ -25,11 +25,8 @@
         <hr />
         <div class='title'>
           <font-awesome-icon icon='key' />
-          비밀번호 변경 (준비중)
+          암호 변경
         </div>
-        <el-input class='marginBottom input-with-select' size='small' placeholder='현재 사용중인 암호' v-model='nowPassword' show-password>
-          <el-button class='editPrepend' slot='prepend'>현재 암호</el-button>
-        </el-input>
         <el-input class='marginBottom input-with-select' size='small' placeholder='20자 제한' v-model='newPassword' show-password>
           <el-button class='editPrepend' slot='prepend'>새 암호</el-button>
         </el-input>
@@ -80,9 +77,9 @@
   export default {
     data() {
       return {
+        username: '',
         nickname: '',
         email: '',
-        nowPassword: '',
         newPassword: '',
         newPassword2: '',
         exp: 0,
@@ -146,12 +143,18 @@
         this.$store.commit('user/setProfileImageUrl', url)
       },
       edit: async function() {
+        if (this.newPassword !== this.newPassword2) return this.$message.error('새 암호가 서로 다릅니다.')
         if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
         const token = this.$store.state.user.token
         this.$store.commit('setLoading', true)
         const data = await this.$axios.$patch(
           '/api/auth/edit',
-          { nickname: this.nickname },
+          {
+            username: this.username,
+            nickname: this.nickname,
+            newPassword: this.newPassword,
+            newPassword2: this.newPassword2
+          },
           { headers: { 'x-access-token': token } }
         )
         if (data.status === 'fail') {
@@ -159,6 +162,7 @@
           return this.$message.error(data.message || '오류가 발생했습니다.')
         }
         this.$message.success('프로필을 편집했습니다.')
+        if (this.username !== '') this.$store.commit('user/setUsername', this.username)
         if (this.nickname !== '') this.$store.commit('user/setNickname', this.nickname)
         this.$store.commit('setLoading')
       },

@@ -15,3 +15,6 @@ module.exports = async (columns, userId) => {
     [...values, userId]
   )
 }
+
+module.exports.password = async (password, salt, userId) =>
+  await pool.query('UPDATE Users SET password = ?, salt = ? WHERE id = ?', [password, salt, userId])

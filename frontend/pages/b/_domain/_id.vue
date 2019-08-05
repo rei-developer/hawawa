@@ -327,14 +327,14 @@
   .topicArticle {
     display: flex;
     margin-top: 1rem;
+    border: 1px solid #EEE;
     background: rgba(255, 255, 255, .95);
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
     flex-direction: column;
   }
   .topicArticle .header {
     display: flex;
     padding: .5rem;
-    border-bottom: 1px solid #F5F5F5;
+    border-bottom: 1px solid #EEE;
   }
   .topicArticle .header .image {
     display: flex;
@@ -346,7 +346,7 @@
     height: 4.5rem;
     padding: 2px;
     border-radius: 500rem;
-    box-shadow: 1px 1px 5px rgba(41, 49, 61, .5);
+    box-shadow: 1px 1px 5px rgba(41, 49, 61, .2);
   }
   .topicArticle .header .info {
     display: flex;
@@ -426,7 +426,7 @@
   }
   .topicArticle .info .item {
     padding: .25rem;
-    border-bottom: 1px solid #F5F5F5;
+    border-bottom: 1px solid #EEE;
   }
   .topicArticle .info .item:last-child { border: 0 }
   .topicArticle .info .item span.link:hover {

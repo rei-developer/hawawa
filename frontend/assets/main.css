@@ -26,9 +26,7 @@ hr {
   display: flex;
   flex-direction: column;
 }
-.Container > .item {
-  display: flex;
-}
+.Container > .item { display: flex }
 .Container > .item > .content {
   display: flex;
   flex: 1;
@@ -50,17 +48,14 @@ hr {
 /* Element UI Customize */
 .el-header,
 .el-main,
-.el-footer {
-  padding: 0 !important;
-}
-.el-header {
-  margin-bottom: 1rem !important;
-}
+.el-footer { padding: 0 !important }
+.el-header { margin-bottom: 1rem !important }
 .el-menu {
   border: 0 !important;
   background-color: transparent !important;
 }
-li.is-active { background-color: transparent !important }
+li.is-active { background-color: #29313D !important }
+li.Logo.is-active { background-color: transparent !important }
 ul.el-menu li,
 ul.el-menu .el-submenu__title { color: #333 !important }
 ul.el-menu li:hover,
@@ -81,9 +76,7 @@ ul.el-menu--horizontal .el-submenu__title,
   color: #FFF !important;
 }
 .el-menu-item:hover,
-.el-submenu__title:hover {
-  background: #29313D !important;
-}
+.el-submenu__title:hover { background: #29313D !important }
 .el-menu-item svg { margin-bottom: 5px !important }
 .el-aside {
   position: fixed;
@@ -93,9 +86,7 @@ ul.el-menu--horizontal .el-submenu__title,
   z-index: 10000;
 }
 
-.el-button--small {
-  height: 32px !important;
-}
+.el-button--small { height: 32px !important }
 .el-button--info {
   border-color: #6d7084 !important;
   background-color: #6d7084 !important;
@@ -115,38 +106,24 @@ ul.el-menu--horizontal .el-submenu__title,
 .el-button--info:hover,
 .el-button--primary:hover,
 .el-button--warning:hover,
-.el-button--danger:hover {
-  opacity: .8;
-}
-.el-radio-button span:hover {
-  color: #25c6ff !important;
-}
+.el-button--danger:hover { opacity: .8 }
+.el-radio-button span:hover { color: #25c6ff !important }
 .el-radio-button.is-active span {
   background-color: #29313D !important;
   border-color: #29313D !important;
   box-shadow: -1px 0 0 0 #29313D !important;
 }
-.el-radio-button.is-active span:hover {
-  color: #FFF !important;
-}
-.el-select {
-  min-width: 6rem !important;
-}
-.el-badge__content {
-  background-color: #ED1C24 !important;
-}
+.el-radio-button.is-active span:hover { color: #FFF !important }
+.el-select { min-width: 6rem !important }
+.el-badge__content { background-color: #ED1C24 !important }
 .el-pagination button,
 .el-pagination ul,
 .el-pagination li { background: transparent !important }
 .el-pagination li { margin-top: 0 !important }
 
 /* Router Progress */
-.page-enter-active, .page-leave-active {
-  transition: opacity .5s;
-}
-.page-enter, .page-leave-to {
-  opacity: 0;
-}
+.page-enter-active, .page-leave-active { transition: opacity .5s }
+.page-enter, .page-leave-to { opacity: 0 }
 
 /* Anime Background */
 .animeBackground {

@@ -21,32 +21,10 @@
                   <el-button type='info' size='small' @click='getData("talk", true)' round>토크</el-button>
                 </el-button-group>
               </div>
-              <masonry
-                :cols='{ default: 4, 1024: 3, 768: 2 }'
-                :gutter='10'>
-                <div
-                  class='masonryList'
-                  v-for='(item, index) in topics'
-                  :key='index'>
-                  <div v-if='item.imageUrl' class='item'>
-                    <img
-                      @click='move(item)'
-                      :src='`https://hawawa.co.kr/img/${item.imageUrl}`'>
-                    <div class='user'>
-                      <div class='item'>
-                        <div class='image'>
-                          <img :src='item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/profile.png"'>
-                        </div>
-                        <div class='info'>
-                          <div><b>{{ item.author }}</b></div>
-                          <div>{{ $moment(item.created).fromNow() }}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </masonry>
-              <!--
+              <div class='containerSubject'>
+                <font-awesome-icon icon='folder-open' />
+                {{ getBoardName() }} 게시물 ({{ numberWithCommas(topicsCount) }})
+              </div>
               <div class='indexTopicList'>
                 <div
                   class='item'
@@ -64,7 +42,7 @@
                     </el-button>
                   </div>
                   <div class='image' @click='move(item)'>
-                    <img :src='item.imageUrl ? "https://idolboard.com/img/thumb/" + item.imageUrl : "/default.png"'>
+                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
                   </div>
                   <div class='info' @click='move(item)'>
                     <div class='subject'>
@@ -83,7 +61,7 @@
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
             <div class='sidebar'>
               <Recent />
@@ -101,7 +79,7 @@
 <script>
   import Library from '~/assets/lib.js'
   import Recent from '~/components/recent.vue'
-
+  
   export default {
     components: { Recent },
     data() {
@@ -192,51 +170,89 @@
 </script>
 
 <style>
-  .masonryList {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin-bottom: 4px;
+  .indexTopicList {
+    display: flex;
+    flex-direction: column;
   }
-  .masonryList .item img {
-    width: 100%;
-    max-height: 480px;
-    border-radius: .15rem;
+  .indexTopicList .item {
+    display: flex;
+    margin-bottom: .5rem;
+    border: 1px solid #EEE;
+    background: #FFF;
   }
-  .masonryList .item img:hover {
-    opacity: .8;
+  .indexTopicList .item:hover {
+    background: #FAFAFA;
     cursor: pointer;
   }
-  .masonryList .item .user {
-    display: flex;
-    position: absolute;
-    width: 100%;
-    height: 44px;
-    bottom: 6px;
-    padding: 6px;
-    background: linear-gradient(to top, rgba(0, 0, 0, .5), transparent);
-    flex-direction: column;
-  }
-  .masonryList .item .user .item {
-    display: flex;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: 1rem;
-  }
-  .masonryList .item .user .item .image {
+  .indexTopicList .item .grade {
     display: flex;
     flex-direction: column;
+    width: 4rem;
+    padding: .5rem;
+    background: #F5F5F5;
+    font-size: .8rem;
+    font-weight: bold;
+    text-align: center;
   }
-  .masonryList .item .user .item .image img {
-    width: 32px;
-    height: 32px;
-    border-radius: 500rem;
+  .indexTopicList .item .grade span.likes {
+    color: #29313D;
   }
-  .masonryList .item .user .item .info {
+  .indexTopicList .item .image {
+    display: flex;
+    flex-direction: column;
+  }
+  .indexTopicList .item .image img {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: .25rem;
+    border-radius: .2rem;
+  }
+  .indexTopicList .item .info {
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding-left: .25rem;
+    padding: .25rem;
+    padding-left: 0;
+  }
+  .indexTopicList .item .info .subject {
+    color: #25c6ff;
+    font-size: .8rem;
+    font-weight: bold;
+  }
+  .indexTopicList .item .info .subject span.board {
+    padding: 0 .5rem;
+    background: #29313D;
+    border-radius: 500rem;
+    color: #FFF;
+  }
+  .indexTopicList .item .info .subject span.star img {
+    width: 16px;
+    height: 16px;
+  }
+  .indexTopicList .item .info .subject span.category,
+  .indexTopicList .item .info .subject span.newest,
+  .indexTopicList .item .info .subject span.posts {
+    margin-left: .1rem;
+    padding: 0 .25rem;
+    background: #25c6ff;
+    border-radius: .1rem;
     color: #FFF;
     font-size: .7rem;
+    font-weight: normal;
+  }
+  .indexTopicList .item .info .subject span.category {
+    margin-left: 0;
+    margin-right: .1rem;
+    background: #29313D;
+  }
+  .indexTopicList .item .info .subject span.posts { background: #999 }
+  .indexTopicList .item .info .regdate {
+    margin-top: .25rem;
+    padding: 0 .5rem;
+    background: #F5F5F5;
+    border-radius: 500rem;
+    color: #35495E;
+    font-size: .7rem;
+    align-self: flex-start;
   }
 </style>

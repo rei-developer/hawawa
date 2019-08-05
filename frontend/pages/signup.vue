@@ -8,10 +8,10 @@
           </nuxt-link>
         </div>
         <div class='title'>회원가입</div>
-        <el-input placeholder='ID' v-model='username' autofocus />
-        <el-input placeholder='비밀번호' v-model='password' show-password />
-        <el-input placeholder='닉네임' v-model='nickname' />
-        <el-input class='input-with-select' placeholder='이메일 주소' v-model='email'>
+        <el-input class='marginBottom' placeholder='ID' v-model='username' autofocus />
+        <el-input class='marginBottom' placeholder='비밀번호' v-model='password' show-password />
+        <el-input class='marginBottom' placeholder='닉네임' v-model='nickname' />
+        <el-input class='marginBottom input-with-select' placeholder='이메일 주소' v-model='email'>
           <el-button slot='append' @click='accept'>전송</el-button>
         </el-input>
         <el-input class='marginBottom' placeholder='인증 코드' v-model='authCode' />
@@ -81,7 +81,7 @@
     left: 50%;
     width: 360px;
     margin-top: -200px;
-    margin-left: -115px;
+    margin-left: -180px;
     -ms-overflow-style: none;
   }
   .accountBox .article {
@@ -92,7 +92,7 @@
     background: rgba(255, 255, 255, .95);
   }
   .accountBox .article .header {
-    width: 280px;
+    width: 262px;
     margin: .5rem auto 1rem;
   }
   .accountBox .article .title {

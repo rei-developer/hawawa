@@ -1,13 +1,13 @@
-const Router    = require('koa-router')
-const auth      = require('./auth')
-const chart     = require('./chart')
-const cloud     = require('./cloud')
-const icon      = require('./icon')
-const notice    = require('./notice')
-const sticker   = require('./sticker')
-const topic     = require('./topic')
+const Router = require('koa-router')
+const auth = require('./auth')
+const chart = require('./chart')
+const cloud = require('./cloud')
+const icon = require('./icon')
+const notice = require('./notice')
+const sticker = require('./sticker')
+const topic = require('./topic')
 
-const VERSION = 55
+const VERSION = 56
 
 const app = new Router()
 

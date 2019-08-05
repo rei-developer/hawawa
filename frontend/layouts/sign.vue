@@ -21,9 +21,10 @@
 <style>
   #background {
     position: fixed;
-    background-image: url('/background.jpg');
-    background-size: cover;
+    background-image: url('/background.png');
+    background-size: contain;
     background-repeat: no-repeat;
+    background-color: #BFEAF0;
     width: 100%;
     height: 100%;
     z-index: -1;

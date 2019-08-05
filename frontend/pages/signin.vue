@@ -6,7 +6,7 @@
           <img src='~/assets/Logo.png'>
         </nuxt-link>
       </div>
-      <el-input placeholder='ID' v-model='username' autofocus />
+      <el-input class='marginBottom' placeholder='ID' v-model='username' autofocus />
       <el-input class='marginBottom' placeholder='비밀번호' v-model='password' show-password />
       <el-button-group>
         <el-button type='info' size='small' @click='signUp'>계정 생성</el-button>
@@ -75,9 +75,7 @@
 
 <style>
   /* Margin */
-  .marginBottom {
-    margin-bottom: .5rem;
-  }
+  .marginBottom { margin-bottom: .5rem }
 
   /* Account Box */
   .accountBox {
@@ -85,8 +83,8 @@
     top: 50%;
     left: 50%;
     width: 360px;
-    margin-top: -115px;
-    margin-left: -115px;
+    margin-top: -120px;
+    margin-left: -180px;
   }
   .accountBox .article {
     width: 100%;
@@ -96,7 +94,7 @@
     background: rgba(255, 255, 255, .95);
   }
   .accountBox .article .header {
-    width: 280px;
+    width: 262px;
     margin: .5rem auto 1rem;
   }
   .accountBox .article .saveId {

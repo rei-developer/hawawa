@@ -12,11 +12,11 @@
           active-text-color='#29313D'>
           <el-menu-item index='0' route='/' class='Logo' @click='forceUpdate'>
             <img src='/favicon.png' class='hidden-desktop'>
-            <img src='~/assets/HeaderLogo.png' class='hidden-mobile'>
+            <img src='~/assets/Logo.png' class='hidden-mobile'>
           </el-menu-item>
-          <el-menu-item index='1' route='/timeline' class='hidden-mobile' @click='forceUpdate'>
+          <el-menu-item index='1' route='/gallery' class='hidden-mobile' @click='forceUpdate'>
             <font-awesome-icon icon='history' />
-            타임라인
+            갤러리
           </el-menu-item>
           <el-menu-item index='2' route='/b/best' class='hidden-mobile' @click='forceUpdate'>
             <font-awesome-icon icon='star' />
@@ -25,7 +25,7 @@
           <el-menu-item index='3' route='/b/all' class='hidden-mobile' @click='forceUpdate'>전체</el-menu-item>
           <el-menu-item index='4' route='/b/talk' class='hidden-mobile' @click='forceUpdate'>토크</el-menu-item>
           <el-menu-item index='5' route='/b/feedback' class='hidden-mobile' @click='forceUpdate'>건의</el-menu-item>
-          <el-menu-item index='6' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지사항</el-menu-item>
+          <el-menu-item index='6' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
           <el-submenu index='7' class='hidden-mobile'>
             <template slot='title'>포인트</template>
             <el-menu-item index='7-1' route='/sticker'>스티커샵</el-menu-item>
@@ -41,10 +41,10 @@
               {{ $store.state.user.nickname }}
             </template>
             <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>
-            <el-menu-item index='8-2' route='/edit/myTopicList'>내 작성글</el-menu-item>
-            <el-menu-item index='8-3' route='/edit/myPostList'>내 작성 댓글</el-menu-item>
-            <el-menu-item @click='development'>블라인드 목록</el-menu-item>
-            <el-menu-item @click='signOut'>로그아웃</el-menu-item>
+            <el-menu-item index='8-2' route='/edit/topic'>내 작성글</el-menu-item>
+            <el-menu-item index='8-3' route='/edit/post'>내 작성 댓글</el-menu-item>
+            <el-menu-item index='8-4' @click='development'>블라인드 목록</el-menu-item>
+            <el-menu-item index='8-5' @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
           <el-menu-item index='8' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
             <font-awesome-icon icon='sign-in-alt' />
@@ -85,7 +85,7 @@
   .Header {
     position: relative;
     margin-bottom: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #29313D;
     background-image: url(/navbg.jpg);
     background-color: #FFF;
     overflow: visible;
@@ -119,7 +119,7 @@
     display: inline-block;
     width: 40px;
     height: 40px;
-    margin: 0 .25rem 6px;
+    margin: 0 .25rem 3px;
     padding: 2px;
     border: 1px solid #DDD;
     border-radius: 500rem;

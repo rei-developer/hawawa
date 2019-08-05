@@ -43,8 +43,7 @@
             <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>
             <el-menu-item index='8-2' route='/edit/topic'>내 작성글</el-menu-item>
             <el-menu-item index='8-3' route='/edit/post'>내 작성 댓글</el-menu-item>
-            <el-menu-item index='8-4' @click='development'>블라인드 목록</el-menu-item>
-            <el-menu-item index='8-5' @click='signOut'>로그아웃</el-menu-item>
+            <el-menu-item index='8-4' @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
           <el-menu-item index='8' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
             <font-awesome-icon icon='sign-in-alt' />
@@ -68,9 +67,6 @@
     methods: {
       forceUpdate() {
         this.$store.commit('forceUpdate')
-      },
-      development() {
-        this.$alert('현재 개발중입니다. 이용에 불편을 드려 대단히 죄송합니다.', '알림', { confirmButtonText: '확인' })
       },
       signOut() {
         if (!this.$store.state.user.isLogged) return

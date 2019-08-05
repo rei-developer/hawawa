@@ -1,26 +1,30 @@
 <template>
   <div>
-    <el-menu :default-openeds='["6", "7"]'>
-      <el-menu-item index='1' @click='move("/b/best")'>
+    <el-menu :default-openeds='["7"]'>
+      <el-menu-item index='1' @click='move("/gallery")'>
+        <font-awesome-icon icon='history' />
+        <span>갤러리</span>
+      </el-menu-item>
+      <el-menu-item index='2' @click='move("/b/best")'>
         <font-awesome-icon icon='star' />
         <span>인기</span>
       </el-menu-item>
-      <el-menu-item index='2' @click='move("/b/all")'>
+      <el-menu-item index='3' @click='move("/b/all")'>
         <span>전체</span>
       </el-menu-item>
-      <el-menu-item index='3' @click='move("/b/talk")'>
+      <el-menu-item index='4' @click='move("/b/talk")'>
         <span>토크</span>
       </el-menu-item>
-      <el-menu-item index='4' @click='move("/b/feedback")'>
+      <el-menu-item index='5' @click='move("/b/feedback")'>
         <span>건의</span>
       </el-menu-item>
-      <el-menu-item index='5' @click='move("/b/notice")'>
+      <el-menu-item index='6' @click='move("/b/notice")'>
         <span>공지사항</span>
       </el-menu-item>
-      <el-submenu index='6'>
+      <el-submenu index='7'>
         <template slot='title'>포인트</template>
-        <el-menu-item index='6-1' @click='move("/sticker")'>스티커샵</el-menu-item>
-        <el-menu-item index='6-2' @click='move("/iconshop")'>아이콘샵</el-menu-item>
+        <el-menu-item index='7-1' @click='move("/sticker")'>스티커샵</el-menu-item>
+        <el-menu-item index='7-2' @click='move("/iconshop")'>아이콘샵</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>

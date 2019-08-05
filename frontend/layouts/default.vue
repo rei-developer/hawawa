@@ -53,7 +53,7 @@
           position: 'top-right',
           onClick: () => this.move(data)
         })
-        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
+        this.playSound('/alram.mp3')
       })
       this.$socket.on('newTopic', data => {
         this.$notify({
@@ -63,7 +63,7 @@
           position: 'top-right',
           onClick: () => this.move(data)
         })
-        this.playSound('https://maoudamashii.jokersounds.com/music/se/mp3/se_maoudamashii_onepoint09.mp3')
+        this.playSound('/alram.mp3')
       })
     },
     mounted() {

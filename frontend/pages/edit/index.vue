@@ -2,17 +2,24 @@
   <div>
     <div class='accountBox'>
       <div class='header'>프로필 편집</div>
-      <div class='profile' :style='$store.state.user.backgroundImageUrl ? `background-image: url(${$store.state.user.backgroundImageUrl})` : "background-image: url(/background.png)"'>
+      <div class='profile' :style='$store.state.user.backgroundImageUrl ? `background-image: url(${$store.state.user.backgroundImageUrl})` : ""'>
+        <div class='background' />
+        <div class='nickname'>
+          <img :src='`/level/${$store.state.user.level}.png`'>
+          {{ $store.state.user.nickname }}
+        </div>
         <el-tooltip class='item' effect='dark' content='배경사진을 변경할 수 있습니다.' placement='bottom'>
-          <div class='background'>
+          <div class='upload'>
             <font-awesome-icon icon='camera' />
             <input type='file' @change='backgroundImageUpload' />
           </div>
         </el-tooltip>
-        <img :src='$store.state.user.profileImageUrl'>
-        <el-tooltip class='item' effect='dark' content='프로필 사진을 변경할 수 있습니다.' placement='bottom'>
-          <input type='file' @change='profileImageUpload' />
-        </el-tooltip>
+        <div class='image'>
+          <img :src='$store.state.user.profileImageUrl || "/profile.png"'>
+          <el-tooltip class='item' effect='dark' content='프로필 사진을 변경할 수 있습니다.' placement='bottom'>
+            <input type='file' @change='profileImageUpload' />
+          </el-tooltip>
+        </div>
       </div>
       <div class='article'>
         <div class='title'>
@@ -243,29 +250,30 @@
   }
   .accountBox .profile {
     position: relative;
-    height: 5.1rem;
-    margin-bottom: .5rem;
     border: 1px solid #EEE;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    background-size: cover;
+    background-repeat: repeat;
   }
-  .accountBox .profile img {
+  .accountBox .profile .image img {
     width: 5rem;
     height: 5rem;
+    margin: .5rem;
     padding: 2px;
     border: 1px solid #CCC;
     border-radius: 500rem;
     background: #FFF;
   }
-  .accountBox .profile input {
+  .accountBox .profile .image input {
     position: absolute;
     width: 5rem;
     height: 5rem;
-    margin-left: -5rem;
+    top: 0;
+    left: .5rem;
     opacity: 0;
   }
-  .accountBox .profile input:hover {
-    cursor: pointer;
-  }
-  .accountBox .profile .background {
+  .accountBox .profile .upload {
     position: absolute;
     right: .5rem;
     bottom: .5rem;
@@ -277,9 +285,38 @@
     color: #FFF;
     font-size: 1.2rem;
     text-align: center;
-    opacity: .5;
+    opacity: .75;
+    z-index: 1;
   }
-  .accountBox .profile .background:hover {
+  .accountBox .profile .upload input {
+    position: absolute;
+    width: 2.2rem;
+    height: 2.2rem;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+  }
+  .accountBox .profile .image input:hover,
+  .accountBox .profile .upload input:hover {
+    cursor: pointer;
+  }
+  .accountBox .profile .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, .5), transparent);
+  }
+  .accountBox .profile .nickname {
+    position: absolute;
+    left: 6rem;
+    bottom: .2rem;
+    color: #FFF;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  .accountBox .profile .upload:hover {
     cursor: pointer;
     opacity: 1;
   }
@@ -288,6 +325,7 @@
     padding: .5rem;
     margin-bottom: 4rem;
     border: 1px solid #EEE;
+    border-top: 0;
     background: #FFF;
   }
   .accountBox .article:last-child {

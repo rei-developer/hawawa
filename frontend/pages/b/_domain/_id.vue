@@ -28,7 +28,7 @@
               </div>
               <div class='Blank' />
               <div class='topicArticle'>
-                <div class='header' :style='topic.background ? `background-image: url(/background.png)` : ""'>
+                <div class='header' :style='topic.background ? `background-image: url(${"https://hawawa.co.kr/background/" + topic.background})` : ""'>
                   <div class='background' />
                   <div class='image'>
                     <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>

@@ -24,6 +24,7 @@ module.exports = async id => {
       tc.likes,
       tc.hates,
       u.profileImageUrl profile,
+      u.backgroundImageUrl background,
       u.level,
       u.icon,
       u.isAdmin admin

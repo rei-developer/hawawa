@@ -28,7 +28,7 @@
 <script>
   import Loading from '~/components/loading.vue'
   import Header from '~/components/header.vue'
-  import Sidemenu from '~/components/sidemenu.vue'
+  import Sidemenu from '~/components/sideMenu.vue'
   import Footer from '~/components/footer.vue'
   
   export default {

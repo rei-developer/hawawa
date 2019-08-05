@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu :default-openeds='["9"]'>
-      <el-menu-item class='is-active' index='1' @click='close()'>
+      <el-menu-item class='is-active' index='1' @click='exit()'>
         <font-awesome-icon icon='times' />
       </el-menu-item>
       <el-menu-item index='2' @click='move("/gallery")'>
@@ -44,7 +44,7 @@
         this.$store.commit('setAside')
         this.$router.push({ path })
       },
-      close() {
+      exit() {
         this.$store.commit('setAside')
       }
     }

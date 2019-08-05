@@ -47,6 +47,12 @@ module.exports.email = async email => {
   return result[0]
 }
 
+module.exports.salt = async id => {
+  const result = await pool.query('SELECT salt FROM Users WHERE id = ?', [id])
+  if (result.length < 1) return false
+  return result[0].salt
+}
+
 module.exports.profileImageUrl = async id => {
   const result = await pool.query('SELECT profileImageUrl FROM Users WHERE id = ?', [id])
   if (result.length < 1) return false

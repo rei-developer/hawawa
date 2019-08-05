@@ -135,9 +135,11 @@ exports.updateUser = async ctx => {
     if (getNickname) return ctx.body = { message: '이미 존재하는 닉네임입니다.', status: 'fail' }
   }
   if (newPassword !== '' && newPassword2 !== '' && newPassword === newPassword2) {
+    const getSalt = await readUser.salt(user.id)
+    console.log(getSalt)
     try {
       const result = await new Promise((resolve, reject) => {
-        hasher({ newPassword }, async (err, pass, salt, hash) => {
+        hasher({ password: newPassword, salt: getSalt }, async (err, pass, salt, hash) => {
           if (err) return reject({ message: err, status: 'fail' })
           await updateUser.password(hash, salt, user.id)
           resolve({ status: 'ok' })

@@ -436,6 +436,7 @@
   .topicArticle .info {
     color: #29313D;
     font-size: .8rem;
+    word-break: break-all;
   }
   .topicArticle .info .item {
     padding: .25rem;

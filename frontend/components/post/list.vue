@@ -361,6 +361,7 @@
   .postList .item .info .desciption {
     color: #333;
     font-size: .8rem;
+    word-break: break-all;
   }
   .postList .item .info .desciption .sticker img {
     width: 100px;

@@ -31,7 +31,7 @@
                 <div class='header' :style='topic.background ? `background-image: url(${"https://hawawa.co.kr/background/" + topic.background})` : ""'>
                   <div class='background' />
                   <div class='image'>
-                    <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/profile.png"'>
+                    <img :src='topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : (topic.profile ? "https://hawawa.co.kr/profile/" + topic.profile : "/default.png")'>
                   </div>
                   <div class='info'>
                     <div class='subject'>

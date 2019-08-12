@@ -40,7 +40,7 @@
         :class='id == item.id ? "item view" : "item odd"'
         v-for='item in notices' :key='item.id'>
         <div class='image' @click='move(item)'>
-          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "https://hawawa.co.kr/profile/" + item.profile'>
+          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : (item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/default.png")'>
         </div>
         <div class='info' @click='move(item)'>
           <div class='subject'>
@@ -86,7 +86,7 @@
         :class='id == item.id ? "item view" : (index % 2 === 0 ? "item" : "item odd")'
         v-for='(item, index) in topics' :key='index'>
         <div class='image' @click='move(item)'>
-          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "https://hawawa.co.kr/profile/" + item.profile'>
+          <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : (item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/default.png")'>
         </div>
         <div class='info' @click='move(item)'>
           <div class='subject'>

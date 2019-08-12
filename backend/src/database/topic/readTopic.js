@@ -106,6 +106,7 @@ module.exports.notices = async domain => {
       t.isBest,
       tc.hits,
       tc.likes,
+      u.profileImageUrl profile,
       u.level,
       u.icon,
       u.isAdmin admin

@@ -82,9 +82,8 @@
   .Header {
     position: relative;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #29313D;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, .25);
     background-image: url(/navbg.jpg);
-    background-color: #FFF;
     overflow: visible;
     z-index: 1;
   }

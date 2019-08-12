@@ -42,7 +42,7 @@
                     </el-button>
                   </div>
                   <div class='image' @click='move(item)'>
-                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "/default.png"'>
+                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "https://hawawa.co.kr/profile/" + item.profile'>
                   </div>
                   <div class='info' @click='move(item)'>
                     <div class='subject'>

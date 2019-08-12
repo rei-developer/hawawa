@@ -1,4 +1,4 @@
-body { background: #F9F9F9 }
+html { background: #F9F9F9 !important }
 
 hr {
   height: 1px !important;
@@ -48,7 +48,10 @@ hr {
 /* Element UI Customize */
 .el-header,
 .el-main,
-.el-footer { padding: 0 !important }
+.el-footer {
+  padding: 0 !important;
+  overflow: hidden !important;
+}
 .el-header { margin-bottom: 1rem !important }
 .el-menu {
   border: 0 !important;
@@ -126,9 +129,22 @@ ul.el-menu--horizontal .el-submenu__title,
 .el-pagination li { background: transparent !important }
 .el-pagination li { margin-top: 0 !important }
 
+.ql-editor {
+  height: 300px !important;
+  overflow-y: auto !important;
+}
+
 /* Router Progress */
-.page-enter-active, .page-leave-active { transition: opacity .5s }
-.page-enter, .page-leave-to { opacity: 0 }
+.page-enter-active, .page-leave-active {
+  transition-duration: .5s;
+
+}
+.page-enter {
+  transform: translateX(10rem);
+}
+.page-leave-to {
+
+}
 
 /* Anime Background */
 .animeBackground {

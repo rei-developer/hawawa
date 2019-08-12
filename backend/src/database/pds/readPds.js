@@ -5,7 +5,6 @@ module.exports = async id => {
   const result = await pool.query(
     `SELECT
       t.userId,
-      t.author,
       t.title,
       t.content,
       t.ip,
@@ -19,10 +18,7 @@ module.exports = async id => {
       tc.hits,
       tc.likes,
       tc.hates,
-      u.profileImageUrl profile,
-      u.level,
-      u.icon,
-      u.isAdmin admin
+      (SELECT imageUrl FROM PdsImages WHERE pdsId = t.id LIMIT 1) imageUrl
     FROM Pds t
     LEFT JOIN PdsCounts tc ON tc.pdsId = t.id
     LEFT JOIN Users u ON u.id = t.userId
@@ -127,7 +123,6 @@ module.exports.pds = async (columns, searches, page, limit) => {
       `SELECT
         t.id,
         t.userId,
-        t.author,
         t.title,
         t.cost,
         t.created,
@@ -135,15 +130,9 @@ module.exports.pds = async (columns, searches, page, limit) => {
         t.isNotice,
         tc.hits,
         tc.likes,
-        u.profileImageUrl profile,
-        u.level,
-        u.icon,
-        u.isAdmin admin,
-        (SELECT imageUrl FROM PdsImages WHERE pdsId = t.id LIMIT 1) imageUrl,
-        (SELECT COUNT(*) FROM Posts WHERE pdsId = t.id) postsCount
+        (SELECT imageUrl FROM PdsImages WHERE pdsId = t.id LIMIT 1) imageUrl
       FROM Pds t
       LEFT JOIN PdsCounts tc ON tc.pdsId = t.id
-      LEFT JOIN Users u ON u.id = t.userId
       WHERE ${keys.map(key => `t.${key} = ?`).join(' AND ')}${query}
       ORDER BY t.id DESC
       LIMIT ?, ?`,
@@ -169,4 +158,10 @@ module.exports.pdsVotes = async (userId, pdsId, ip) => {
   const result = await pool.query('SELECT created FROM PdsVotes WHERE pdsId = ? AND (userId = ? OR ip = ?)', [pdsId, userId, ip])
   if (result.length < 1) return false
   return result[0].created
+}
+
+module.exports.buy = async id => {
+  const result = await pool.query('SELECT url, password, cost FROM Pds WHERE id = ?', [id])
+  if (result.length < 1) return false
+  return result[0]
 }

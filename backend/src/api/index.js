@@ -8,7 +8,7 @@ const pds = require('./pds')
 const sticker = require('./sticker')
 const topic = require('./topic')
 
-const VERSION = 63
+const VERSION = 64
 
 const app = new Router()
 

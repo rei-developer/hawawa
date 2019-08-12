@@ -26,10 +26,10 @@
                 </nuxt-link>
               </div>
               <div class='Blank' />
-              <div class='topicArticle'>
+              <div class='pdsArticle'>
                 <div class='header'>
                   <div class='image'>
-                    <img :src='pds.profile ? "https://hawawa.co.kr/profile/" + pds.profile : "/profile.png"'>
+                    <img :src='pds.imageUrl ? "https://hawawa.co.kr/img/thumb/" + pds.imageUrl : "/profile.png"'>
                   </div>
                   <div class='info'>
                     <div class='subject'>
@@ -40,10 +40,9 @@
                       {{ pds.title }}
                     </div>
                     <div class='author'>
-                      <img :src='`/level/${pds.level}.png`'>
-                      <img class='icon' :src='`https://hawawa.co.kr/icon/${pds.icon}`' v-if='pds.icon !== ""'>
                       <span class='userTitle' v-if='pds.userTitle'>{{ pds.userTitle }}</span>
-                      {{ pds.author }}
+                      <font-awesome-icon icon='gift' />
+                      {{ pds.cost }}P
                     </div>
                     <div class='detail'>
                       <span>
@@ -79,6 +78,24 @@
                       </el-button>
                     </el-button-group>
                   </div>
+                  <div class='click' v-if='$store.state.user.isLogged'>
+                    아래 광고를 클릭하시면 임의로 100P를 드립니다.
+                  </div>
+                  <div class='download' @click='download()'>
+                    <font-awesome-icon icon='gift' />
+                    {{ pds.cost }}P 다운로드 링크
+                  </div>
+                  <div class='url' v-if='url'>
+                    <font-awesome-icon icon='link' />
+                    <a :href='url' target='_blank'>{{ url }}</a>
+                    <span v-if='password'>(비밀번호 : {{ password }})</span>
+                  </div>
+                </div>
+                <div class='AD hidden-mobile'>
+                  <iframe src='/ad.html' />
+                </div>
+                <div class='AD hidden-desktop'>
+                  <iframe src='/ad-mobile.html' />
                 </div>
               </div>
               <div class='marginTop'>
@@ -126,6 +143,8 @@
     data() {
       return {
         id: 0,
+        url: '',
+        password: '',
         pds: {
           userId: 0,
           author: '',
@@ -133,7 +152,6 @@
           content: '',
           ip: '',
           header: '',
-          url: '',
           cost: 0,
           created: '',
           updated: '',
@@ -181,6 +199,25 @@
         this.$message('투표했습니다.')
         this.$store.commit('setLoading')
       },
+      download: async function() {
+        if (this.id < 1) return
+        if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
+        const token = this.$store.state.user.token
+        this.$store.commit('setLoading', true)
+        const data = await this.$axios.$post(
+          '/api/pds/buy',
+          { id: this.id },
+          { headers: { 'x-access-token': token } }
+        )
+        if (data.status === 'fail') {
+          this.$store.commit('setLoading')
+          return this.$message.error(data.message || '오류가 발생했습니다.')
+        }
+        this.url = data.url
+        this.password = data.password
+        this.$message('다운로드를 성공했습니다.')
+        this.$store.commit('setLoading')
+      },
       removeHandler: async function() {
         if (this.id < 1 || !this.$store.state.user.isLogged) return
         this.$confirm('정말로 삭제하시겠습니까?', '알림', {
@@ -224,48 +261,48 @@
 </script>
 
 <style>
-  .topicArticle {
+  .pdsArticle {
     display: flex;
     margin-top: 1rem;
     border: 1px solid #EEE;
     background: rgba(255, 255, 255, .95);
     flex-direction: column;
   }
-  .topicArticle .header {
+  .pdsArticle .header {
     display: flex;
     padding: .5rem;
     border-bottom: 1px solid #EEE;
   }
-  .topicArticle .header .image {
+  .pdsArticle .header .image {
     display: flex;
     margin-right: 1rem;
     flex-direction: column;
   }
-  .topicArticle .header .image img {
+  .pdsArticle .header .image img {
     width: 4.5rem;
     height: 4.5rem;
     padding: 2px;
     border-radius: 500rem;
     box-shadow: 1px 1px 5px rgba(41, 49, 61, .2);
   }
-  .topicArticle .header .info {
+  .pdsArticle .header .info {
     display: flex;
     flex: 1;
     flex-direction: column;
     padding: .25rem;
     padding-left: 0;
   }
-  .topicArticle .header .info .subject {
+  .pdsArticle .header .info .subject {
     color: #29313D;
     font-size: 1rem;
     font-weight: bold;
   }
-  .topicArticle .header .info .subject span.star img {
+  .pdsArticle .header .info .subject span.star img {
     width: 16px;
     height: 16px;
   }
-  .topicArticle .header .info .subject span.notice,
-  .topicArticle .header .info .subject span.category {
+  .pdsArticle .header .info .subject span.notice,
+  .pdsArticle .header .info .subject span.category {
     margin-right: .1rem;
     padding: 0 .25rem;
     background: #ED1C24;
@@ -273,68 +310,94 @@
     color: #FFF;
     font-size: .8rem;
   }
-  .topicArticle .header .info .subject span.category { background: #29313D }
-  .topicArticle .header .info .author {
+  .pdsArticle .header .info .subject span.category { background: #29313D }
+  .pdsArticle .header .info .author {
     color: #333;
     font-size: .8rem;
     font-weight: bold;
   }
-  .topicArticle .header .info .author img.icon {
+  .pdsArticle .header .info .author img.icon {
     width: 16px;
     height: 16px;
     vertical-align: text-top;
   }
-  .topicArticle .header .info .author span.userTitle {
+  .pdsArticle .header .info .author span.userTitle {
     padding: 0 .25rem;
     background: #29313D;
     border-radius: .25rem;
     color: #FFF;
     font-size: .7rem;
   }
-  .topicArticle .header .info .detail span {
+  .pdsArticle .header .info .detail span {
     margin-right: .25rem;
     color: #999;
     font-size: .7rem;
     font-weight: normal;
   }
-  .topicArticle .content {
+  .pdsArticle .content {
     margin: 0;
     padding: 1rem;
     border-bottom: 1px solid #F5F5F5;
     font-size: .9rem;
   }
-  .topicArticle .content .chart {
+  .pdsArticle .content .chart {
     text-align: center;
   }
-  .topicArticle .content img {
+  .pdsArticle .content .download {
+    width: fit-content;
+    margin: .5rem auto 0;
+    padding: .5rem;
+    border-radius: .5rem;
+    background: #25c6ff;
+    color: #FFF;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  .pdsArticle .content .url {
+    margin-top: .5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  .pdsArticle .content .download:hover {
+    opacity: .8;
+    cursor: pointer;
+  }
+  .pdsArticle .content .click {
+    color: red;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  .pdsArticle .content img {
     max-width: 100%;
     height: auto;
   }
-  .topicArticle .content iframe {
+  .pdsArticle .content iframe {
     min-width: calc(375px - 2rem);
     min-height: 193px;
     border: 0;
   }
-  .topicArticle .content .event {
+  .pdsArticle .content .event {
     width: 300px;
     margin: 2rem auto .5rem;
     text-align: center;
   }
-  .topicArticle .info {
+  .pdsArticle .info {
     color: #29313D;
     font-size: .8rem;
   }
-  .topicArticle .info .item {
+  .pdsArticle .info .item {
     padding: .25rem;
     border-bottom: 1px solid #EEE;
   }
-  .topicArticle .info .item:last-child { border: 0 }
-  .topicArticle .info .item span.link:hover {
+  .pdsArticle .info .item:last-child { border: 0 }
+  .pdsArticle .info .item span.link:hover {
     color: #25c6ff;
     text-decoration: underline;
     cursor: pointer;
   }
-  .topicArticle .info .item .event {
+  .pdsArticle .info .item .event {
     display: inline-block;
     width: fit-content;
     padding: 0 .5rem;
@@ -342,13 +405,13 @@
     border-radius: .25rem;
     font-size: .75rem;
   }
-  .topicArticle .info .item .event:hover {
+  .pdsArticle .info .item .event:hover {
     opacity: .8;
     cursor: pointer;
   }
 
   @media (min-width: 720px) {
-    .topicArticle .content iframe {
+    .pdsArticle .content iframe {
       min-width: 480px;
       min-height: 360px;
       border: 0;

@@ -30,6 +30,11 @@
             </el-input>
           </div>
           <div class='marginBottom'>
+            <el-input size='medium' placeholder='패스워드' v-model='form.password'>
+              <template slot='prepend'>패스워드</template>
+            </el-input>
+          </div>
+          <div class='marginBottom'>
             <el-input type='number' size='medium' value='20' placeholder='다운로드 가격' v-model='form.cost'>
               <template slot='prepend'>다운로드 가격</template>
             </el-input>
@@ -95,6 +100,7 @@
       return {
         form: {
           url: '',
+          password: '',
           cost: 20,
           title: '',
           content: '<p></p>',
@@ -120,6 +126,7 @@
         const data = await this.$axios.$post('/api/pds/write', {
           isNotice: this.form.isNotice,
           url: this.form.url,
+          password: this.form.password,
           cost: this.form.cost,
           title: this.form.title,
           content: this.form.content,

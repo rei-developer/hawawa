@@ -8,6 +8,7 @@ app.get('/read/:id', Controller.getContent)
 app.post('/list', Controller.getPds)
 app.post('/write', Controller.createPds)
 app.post('/vote', Controller.createPdsVotes)
+app.post('/buy', Controller.buy)
 app.patch('/edit/notice', Controller.updatePdsByIsNotice)
 app.delete('/delete', Controller.deletePds)
 

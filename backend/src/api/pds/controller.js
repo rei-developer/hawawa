@@ -50,6 +50,7 @@ module.exports.createPds = async ctx => {
     isNotice,
     title,
     url,
+    password,
     cost,
     content,
     images
@@ -57,6 +58,7 @@ module.exports.createPds = async ctx => {
   if (url === '' || title === '' || content === '') return
   title = Filter.disable(title)
   url = Filter.disable(url)
+  if (password) password = Filter.disable(password)
   content = Filter.topic(content)
   if (user.isAdmin < 1) {
     // TODO: 관리자 전용 커스텀
@@ -73,6 +75,7 @@ module.exports.createPds = async ctx => {
     ip,
     header,
     url,
+    password,
     cost,
     isImage,
     isNotice
@@ -110,6 +113,18 @@ module.exports.createPdsVotes = async ctx => {
     await updatePds.updatePdsCountsByHates(id)
   }
   ctx.body = { move: '', status: 'ok' }
+}
+
+module.exports.buy = async ctx => {
+  const { id } = ctx.request.body
+  if (id < 1) return
+  const user = await User.getUser(ctx.get('x-access-token'))
+  if (!user) return
+  const buyItem = await readPds.buy(id)
+  if (!buyItem) return
+  if (user.point < buyItem.cost) return ctx.body = { message: '포인트가 부족합니다.', status: 'fail' }
+  await User.setUpPoint(user, -buyItem.cost)
+  ctx.body = { url: buyItem.url, password: buyItem.password, status: 'ok' }
 }
 
 module.exports.updatePdsByIsNotice = async ctx => {

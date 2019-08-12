@@ -83,10 +83,9 @@
             </span>
           </div>
           <div class='author'>
-            <img :src='`/level/${item.level}.png`'>
-            <img class='icon' :src='`https://hawawa.co.kr/icon/${item.icon}`' v-if='item.icon !== ""'>
             <span class='userTitle' v-if='item.userTitle'>{{ item.userTitle }}</span>
-            {{ item.author }}
+            <font-awesome-icon icon='gift' />
+            {{ item.cost }}P
             <span class='event'>
               <font-awesome-icon icon='clock' />
               {{ $moment(item.created).format('YYYY/MM/DD HH:mm:ss') }}

@@ -1,8 +1,6 @@
 const fs = require('fs')
-const redis = require('redis')
 const moment = require('moment')
 const Filter = require('../../lib/filter')
-const socket = require('../../lib/socket.io')
 const User = require('../../lib/user')
 const createChart = require('../../database/chart/createChart')
 const createNotice = require('../../database/notice/createNotice')
@@ -20,8 +18,6 @@ const updateTopic = require('../../database/topic/updateTopic')
 const deleteNotice = require('../../database/notice/deleteNotice')
 const deletePost = require('../../database/post/deletePost')
 const deleteTopic = require('../../database/topic/deleteTopic')
-
-const client = redis.createClient()
 
 const BURN_LIMIT = 1
 const BEST_LIMIT = 3
@@ -58,29 +54,7 @@ module.exports.getTopics = async ctx => {
   const count = await readTopic.count(obj)
   const categories = await readBoard.categories(domain)
   const notices = await readTopic.notices(domain)
-  if (notices.length > 0) {
-    const jobs = notices.map(notice => new Promise(resolve => {
-      client.get(notice.id, (err, value) => {
-        if (err) return resolve(true)
-        const hits = Number(value) || 0
-        notice.hits += hits
-        resolve(true)
-      })
-    }))
-    await Promise.all(jobs)
-  }
   const topics = await readTopic.topics(obj, searches, page, limit)
-  if (topics.length > 0) {
-    const jobs = topics.map(topic => new Promise(resolve => {
-      client.get(topic.id, (err, value) => {
-        if (err) return resolve(true)
-        const hits = Number(value) || 0
-        topic.hits += hits
-        resolve(true)
-      })
-    }))
-    await Promise.all(jobs)
-  }
   ctx.body = { count, categories, notices, topics }
 }
 
@@ -129,20 +103,6 @@ module.exports.getContent = async ctx => {
   const images = topic.isImage > 0
     ? await readTopic.topicImages(id)
     : []
-  if (client.exists(id)) {
-    const hits = await new Promise(resolve => {
-      client.get(id, (err, value) => {
-        if (err) return resolve(1)
-        const hit = Number(value) + 1
-        client.set(id, hit)
-        resolve(hit)
-      })
-    })
-    topic.hits += hits
-  } else {
-    client.set(id, 1)
-    topic.hits += 1
-  }
   let count = 0
   if (user) {
     await updateNotice.updateNoticeByConfirm(user.id, id)
@@ -195,7 +155,6 @@ module.exports.createTopic = async ctx => {
   if (isChart) await createChart(topicId, charts.split('\n'))
   if (isImage) await createTopic.createTopicImages(topicId, images)
   await User.setUpPoint(user, 10)
-  await socket.newTopic(global.io, topicId, domain, title)
   ctx.body = { topicId, status: 'ok' }
 }
 
@@ -240,7 +199,6 @@ module.exports.createPost = async ctx => {
     resolve(true)
   }))
   await Promise.all(jobs)
-  await socket.newPost(global.io, topicId)
   ctx.body = { postId, postsCount, posts, status: 'ok' }
 }
 
@@ -276,7 +234,6 @@ module.exports.createTopicVotes = async ctx => {
       move = 'BEST'
       await updateTopic.updateTopicByIsBest(id, 2)
       await User.setUpExpAndPoint(targetUser, 100, 100)
-      await socket.newBest(global.io, id, topic.boardDomain, topic.title)
     } else {
       await User.setUpExpAndPoint(targetUser, 5, 5)
     }
@@ -299,7 +256,6 @@ module.exports.createTopicVotes = async ctx => {
     }
     await updateTopic.updateTopicCountsByHates(id)
   }
-  await socket.vote(global.io, id, likes ? ++topic.likes : topic.likes, likes ? topic.hates : ++topic.hates)
   ctx.body = { move: '', status: 'ok' }
 }
 
@@ -329,7 +285,6 @@ module.exports.createPostVotes = async ctx => {
     await updatePost.updatePostCountsByLikes(id)
   else
     await updatePost.updatePostCountsByHates(id)
-  await socket.votePost(global.io, post.topicId, id, likes ? ++post.likes : post.likes, likes ? post.hates : ++post.hates)
   ctx.body = { status: 'ok' }
 }
 

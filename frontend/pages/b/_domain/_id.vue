@@ -232,17 +232,6 @@
         images: data.images
       }
     },
-    beforeMount() {
-      this.$socket.emit('join', this.id)
-      this.$socket.on('vote', data => {
-        this.topic.likes = data.likes
-        this.topic.hates = data.hates
-      })
-    },
-    beforeDestroy() {
-      this.$socket.emit('leave', this.id)
-      this.$socket.removeAllListeners()
-    },
     methods: {
       votes: async function(flag) {
         if (this.id < 1) return

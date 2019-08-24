@@ -41,40 +41,14 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 65
+        frontendVersion: 66
       }
-    },
-    beforeMount() {
-      this.$socket.on('newBest', data => {
-        this.$notify({
-          title: data.title,
-          message: '새로운 인기글이 등록되었습니다!',
-          customClass: 'notify best',
-          position: 'top-right',
-          onClick: () => this.move(data)
-        })
-        this.playSound('/alram.mp3')
-      })
-      this.$socket.on('newTopic', data => {
-        this.$notify({
-          title: data.title,
-          message: '새로운 글이 등록되었습니다.',
-          customClass: 'notify',
-          position: 'top-right',
-          onClick: () => this.move(data)
-        })
-        this.playSound('/alram.mp3')
-      })
     },
     mounted() {
       this.checkVersion()
       this.checkLogged()
       this.getNotices()
       this.updateNotices()
-    },
-    beforeDestroy() {
-      this.$socket.removeAllListeners()
-      this.$socket.clear()
     },
     methods: {
       checkVersion: async function() {

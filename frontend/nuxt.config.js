@@ -9,7 +9,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no' },
       { name: 'theme-color', content: '#29313D' },
       { name: 'google-site-verification', content: 'BEmhl96CsIh9rlpvLSKMLLjHOccJrj6VnMdtMjd8Nbk' },
-      { hid: 'description', name: 'description', content: '하와와 - 유머, 정보, 연예인, 애니메이션, 서브컬쳐 커뮤니티' }
+      { hid: 'description', name: 'description', content: '하와와 - 유머, 정보, 애니메이션, 서브컬쳐 커뮤니티' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
@@ -36,10 +36,9 @@ module.exports = {
         })
       }
     },
-    vendor: ['vuex', 'socket.io-client', 'element-ui'],
+    vendor: ['vuex', 'element-ui'],
   },
   plugins: [
-    '~/plugins/socket.io.js',
     '~/plugins/element-ui',
     { src: '~/plugins/quill.js', ssr: false },
     { src: '~/plugins/chart', ssr: false },
@@ -71,9 +70,6 @@ module.exports = {
   },
   proxy: {
     '/api': 'http://127.0.0.1:3000'
-  },
-  env: {
-    SOCKET_HOST_URL: 'https://hawawa.co.kr'
   },
   configureWebpack: {
     output: {

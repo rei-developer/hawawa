@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 67
+        frontendVersion: 68
       }
     },
     mounted() {

@@ -29,20 +29,8 @@
                 <div
                   class='item'
                   v-for='(item, index) in topics' :key='index'>
-                  <div class='grade'>
-                    <span class='likes'>
-                      <font-awesome-icon icon='angle-up' />
-                      {{ numberWithCommas(item.likes) }}
-                    </span>
-                    <el-button
-                      size='mini'
-                      plain round
-                      @click='votes(item.id)'>
-                      <font-awesome-icon icon='heart' />
-                    </el-button>
-                  </div>
                   <div class='image' @click='move(item)'>
-                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : "https://hawawa.co.kr/profile/" + item.profile'>
+                    <img :src='item.imageUrl ? "https://hawawa.co.kr/img/thumb/" + item.imageUrl : (item.profile ? "https://hawawa.co.kr/profile/" + item.profile : "/default.png")'>
                   </div>
                   <div class='info' @click='move(item)'>
                     <div class='subject'>
@@ -130,25 +118,6 @@
         this.$store.commit('setLoading')
         return data
       },
-      votes: async function(id) {
-        if (process.browser) {
-          if (id < 1) return
-          if (!this.$store.state.user.isLogged) return this.$message.error('로그인하세요.')
-          const token = this.$store.state.user.token
-          this.$store.commit('setLoading', true)
-          const data = await this.$axios.$post(
-            '/api/topic/vote',
-            { id, likes: true },
-            { headers: { 'x-access-token': token } }
-          )
-          if (data.status === 'fail') {
-            this.$store.commit('setLoading')
-            return this.$message.error(data.message || '오류가 발생했습니다.')
-          }
-          data.move === 'BEST' ? this.$message.success('인기글로 보냈습니다!') : this.$message('추천했습니다.')
-          this.$store.commit('setLoading')
-        }
-      },
       move(item) {
         const domain = this.domain === 'best' ? 'best' : item.boardDomain
         this.$router.push({ path: `/b/${domain}/${item.id}` })
@@ -183,19 +152,6 @@
   .indexTopicList .item:hover {
     background: #FAFAFA;
     cursor: pointer;
-  }
-  .indexTopicList .item .grade {
-    display: flex;
-    flex-direction: column;
-    width: 4rem;
-    padding: .5rem;
-    background: #F5F5F5;
-    font-size: .8rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  .indexTopicList .item .grade span.likes {
-    color: #29313D;
   }
   .indexTopicList .item .image {
     display: flex;

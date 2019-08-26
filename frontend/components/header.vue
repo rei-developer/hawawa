@@ -24,15 +24,14 @@
           </el-menu-item>
           <el-menu-item index='3' route='/b/all' class='hidden-mobile' @click='forceUpdate'>전체</el-menu-item>
           <el-menu-item index='4' route='/b/talk' class='hidden-mobile' @click='forceUpdate'>토크</el-menu-item>
-          <el-menu-item index='5' route='/b/feedback' class='hidden-mobile' @click='forceUpdate'>건의</el-menu-item>
-          <el-menu-item index='6' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지</el-menu-item>
-          <el-menu-item index='7' route='/pds' class='hidden-mobile' @click='forceUpdate'>자료실</el-menu-item>
-          <el-submenu index='8' class='hidden-mobile'>
+          <el-menu-item index='5' route='/b/notice' class='hidden-mobile' @click='forceUpdate'>공지사항</el-menu-item>
+          <el-menu-item index='6' route='/pds' class='hidden-mobile' @click='forceUpdate'>자료실</el-menu-item>
+          <el-submenu index='7' class='hidden-mobile'>
             <template slot='title'>포인트</template>
-            <el-menu-item index='8-1' route='/sticker'>스티커샵</el-menu-item>
-            <el-menu-item index='8-2' route='/iconshop'>아이콘샵</el-menu-item>
+            <el-menu-item index='7-1' route='/sticker'>스티커샵</el-menu-item>
+            <el-menu-item index='7-2' route='/iconshop'>아이콘샵</el-menu-item>
           </el-submenu>
-          <el-submenu index='9' class='rightMenu' v-if='$store.state.user.isLogged'>
+          <el-submenu index='8' class='rightMenu' v-if='$store.state.user.isLogged'>
             <template slot='title'>
               <div class='Avatar'>
                 <img :src='$store.state.user.profileImageUrl'>
@@ -41,16 +40,16 @@
               <img class='Icon' :src='`https://hawawa.co.kr/icon/${$store.state.user.icon}`' v-if='$store.state.user.icon !== ""'>
               {{ $store.state.user.nickname }}
             </template>
-            <el-menu-item index='9-1' route='/edit'>프로필 편집</el-menu-item>
-            <el-menu-item index='9-2' route='/edit/topic'>내 작성글</el-menu-item>
-            <el-menu-item index='9-3' route='/edit/post'>내 작성 댓글</el-menu-item>
-            <el-menu-item index='9-4' @click='signOut'>로그아웃</el-menu-item>
+            <el-menu-item index='8-1' route='/edit'>프로필 편집</el-menu-item>
+            <el-menu-item index='8-2' route='/edit/topic'>내 작성글</el-menu-item>
+            <el-menu-item index='8-3' route='/edit/post'>내 작성 댓글</el-menu-item>
+            <el-menu-item index='8-4' @click='signOut'>로그아웃</el-menu-item>
           </el-submenu>
-          <el-menu-item index='9' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
+          <el-menu-item index='8' route='/signin' class='rightMenu' v-if='!$store.state.user.isLogged'>
             <font-awesome-icon icon='sign-in-alt' />
             로그인
           </el-menu-item>
-          <el-menu-item index='10' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
+          <el-menu-item index='9' route='/notice' class='rightMenu' @click='forceUpdate' v-if='$store.state.user.isLogged'>
             <font-awesome-icon icon='envelope' />
             <el-badge class='Badge' :value='$store.state.user.noticeCount' v-if='$store.state.user.noticeCount > 0' />
           </el-menu-item>

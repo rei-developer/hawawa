@@ -38,4 +38,4 @@ yarn start:prod
   1. Auth JWT 토큰 인증 및 로그인/로그아웃 구현
 
 ## FILE DELETE
-- find * -mtime +2 -delete
+- find * -mtime +1 -delete

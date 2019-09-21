@@ -41,7 +41,7 @@
     data() {
       return {
         backendVersion: 0,
-        frontendVersion: 68
+        frontendVersion: 70
       }
     },
     mounted() {
@@ -114,7 +114,7 @@
   /* Popup Menu */
   .popupMenu {
     position: fixed;
-    left: 2rem;
+    right: 2rem;
     bottom: 2rem;
     width: 4rem;
     height: 4rem;
